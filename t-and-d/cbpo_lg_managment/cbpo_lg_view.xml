@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>  
+        <record id="cbpo_lg_search_view" model="ir.ui.view">
+            <field name="name">cbpo;lg.search.form</field>
+            <field name="model">cbpo.lg</field>
+            <field name="arch" type="xml">
+                <search string="LG Mangment">
+                   <group  expand='0' string='Filter By...'>
+					   <filter string='Issued' icon="terp-stock_symbol-selection" name="filter_out_type" domain="[('cbpo_lg_direction','=','out')]"/>
+					   <filter string='Incoming' icon="terp-stock_symbol-selection" name="filter_in_type" domain="[('cbpo_lg_direction','=','in')]"/>
+					   <filter string='Expired during a month' icon="terp-stock_symbol-selection" name="filter_less_than_month" domain="['|','&amp;',('cbpo_lg_renew.cbpo_lg_renew_end_date','&gt;=',context_today().strftime('%%m/%%d/%%Y')),('cbpo_lg_renew.cbpo_lg_renew_end_date','&lt;=',(context_today()+relativedelta(months=1)).strftime('%%m/%%d/%%Y')),'&amp;',('cbpo_lg_end_date','&gt;',context_today().strftime('%%m/%%d/%%Y')),('cbpo_lg_end_date','&lt;=',(context_today()+relativedelta(months=1)).strftime('%%m/%%d/%%Y'))]"/>
+					   <!-- <filter string='month' icon="terp-stock_symbol-selection" name="filter_less_than_month" domain="['cbpo_lg_renew.cbpo_lg_renew_end_date','&lt;=',context_today().strftime('%%m/%%d/%%Y')]"/> -->
+					   <!-- <filter string='month' icon="terp-stock_symbol-selection" name="filter_less_than_month" domain="['cbpo_lg_renew.cbpo_lg_renew_end_date','&lt;=',((context_today()-relativedelta(months=1)).strftime('%%m/%%d/%%Y')).strftime('%%m/%%d/%%Y')]"/> -->
+					   <!-- ,((('cbpo_lg_end_date'-datetime.timedelta(days=30)).strftime('%%m/%%d/%%Y')),'&lt;=',((context_today()).strftime('%%m/%%d/%%Y'))) -->
+					    <!-- <filter string='month' icon="terp-stock_symbol-selection" name="filter_less_than_month" domain="['&amp;',(('cbpo_lg_renew.cbpo_lg_renew_end_date','&gt;=',context_today().strftime('%%m/%%d/%%Y')),('cbpo_lg_renew.cbpo_lg_renew_end_date','&lt;=',(context_today()+relativedelta(months=1)).strftime('%%m/%%d/%%Y')))]"/> -->
+					   <!-- <filter string='today' icon="terp-stock_symbol-selection" name="filter_great_than_today" domain="['|',('cbpo_lg_renew.cbpo_lg_renew_end_date','&gt;=',context_today().strftime('%%m/%%d/%%Y')),('cbpo_lg_end_date','&gt;=',context_today().strftime('%%m/%%d/%%Y'))]"/> -->
+					   <!-- or -->
+					   <!-- ,(('cbpo_lg_end_date','&gt;=',context_today().strftime('%%m/%%d/%%Y')),('cbpo_lg_end_date','&lt;=',(context_today()+relativedelta(months=1)).strftime('%%m/%%d/%%Y'))) -->
+					   <!-- ('&',('cbpo_lg_renew.cbpo_lg_renew_end_date','&gt;=',context_today().strftime('%%m/%%d/%%Y')),('cbpo_lg_renew.cbpo_lg_renew_end_date','&gt;=',(context_today()+relativedelta(months=1)).strftime('%%m/%%d/%%Y'))) -->					   
+					   <!-- <filter string='باقى شهر' icon="terp-stock_symbol-selection" name="filter_in_month" domain="[('cbpo_lg_renew.cbpo_lg_renew_end_date','&lt;=',(('cbpo_lg_renew.cbpo_lg_renew_end_date' + relativedelta(months=1)).strftime('%%m/%%d/%%Y')))]"/> -->
+					</group> 
+                   <group  expand='0' string='Group By...'>
+					   <filter string='Tender' icon="terp-stock_symbol-selection" name="groupby_tender" domain="[]" context="{'group_by': ['cbpo_lg_tender'] }"/>
+					   <filter string='Issued from / to' icon="terp-stock_symbol-selection" name="groupby_partner" domain="[]" context="{'group_by': ['cbpo_lg_partner'] }"/>
+					   <filter string='Case' icon="terp-stock_symbol-selection" name="groupby_status" domain="[]" context="{'group_by': ['cbpo_lg_status'] }"/>
+					   <!-- <filter string='ينتهى هذا الشهر' icon="terp-stock_symbol-selection" name="expired_this_month" domain="['|',('m_date','=','1900-01-01 00:00:00'),'&amp;',('m_date','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('m_date','&gt;=',time.strftime('%%Y-%%m-%%d 00:00:00'))]" context="{}"" />  -->
+                   </group> 
+                </search>
+            </field>
+        </record>	
+		<record id="cbpo_lg_form_view" model="ir.ui.view">  
+			<field name="name">cbpo_lg_form</field>
+			<field name="model">cbpo.lg</field>
+			<field name="arch" type="xml">		
+				<form string="Letters of Guarantee" version="7.0">
+					<group>
+						<group>
+							<field name="cbpo_lg_tender"/>
+							<field name="cbpo_lg_type"/>
+							<field name="cbpo_lg_internal_series"/>
+							<field name="cbpo_lg_bank_series"/> 
+							<field name="cbpo_lg_renewable"/>
+						<separator string="Bank" colspan="2"/>
+							<field name="cbpo_lg_bank_name" />
+							<field name="acc_number" />
+						<field name="cbpo_lg_bank_fees"/>
+						</group>
+						<group col="4">
+							<field name="cbpo_lg_direction" colspan="4"/> 
+							<field name="cbpo_lg_for" colspan="4"/>
+							<field name="cbpo_lg_amount" on_change="onchange_calc_cover_amount(cbpo_lg_amount,cbpo_lg_payed_amount,context)" colspan="2"/>
+							<field name="cbpo_lg_currency" widget="selection" colspan="2"/>
+							<field name="cbpo_lg_status" colspan="4"/>
+							<field name="cbpo_lg_partner" colspan="4"/>
+							<separator string="The validity Letters" colspan="4"/>
+							<field name="cbpo_lg_duration" colspan="4"/>
+							<field name="cbpo_lg_start_date" colspan="4"/>
+							<field name="cbpo_lg_end_date" colspan="4"/>
+						</group>
+					</group>
+					<group>
+						<group>
+							<field name="cbpo_lg_cover_amount"/>
+							<field name="cbpo_lg_per"/>
+							<field name="cbpo_lg_payed_amount" on_change="onchange_calc_cover_amount(cbpo_lg_amount,cbpo_lg_payed_amount,context)"/>
+						</group>
+						<group>
+							<field name="cbpo_lg_active"/>
+							<field name="cbpo_lg_description"/>
+						</group>
+					</group>
+					<notebook>
+						<page string="Renew">
+							<field name="cbpo_lg_renew" widget="one2many_list" attrs="{'readonly':[('cbpo_lg_renewable','!=', True)]}"/>
+						</page>
+						<page string="Payment">
+							<field name="cbpo_lg_installment" widget="one2many_list" attrs="{'readonly':[('cbpo_lg_type','!=', 'prepay')]}"/>
+						</page>
+					</notebook>
+				</form> 
+			</field>
+		</record>
+
+		<record id="cbpo_lg_tree_view" model="ir.ui.view">
+			<field name="name">cbpo_lg_tree</field>
+			<field name="model">cbpo.lg</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+			<!-- ;red:cbpo_lg_due_date &lt;= '20' -->
+				<tree string="Letters of Guarantee"  colors="grey:cbpo_lg_status in ('closed','expired');red:cbpo_lg_due_date &lt; 15;blue:cbpo_lg_due_date &lt; 30;" >
+					<field name="cbpo_lg_due_date" />
+					<field name="cbpo_lg_tender" />
+					<field name="cbpo_lg_internal_series" />
+					<field name="cbpo_lg_bank_series" />
+					<field name="cbpo_lg_partner" /> 
+					<field name="cbpo_lg_direction" /> 
+					<field name="cbpo_lg_for" /> 
+					<field name="cbpo_lg_amount" /> 
+					<field name="cbpo_lg_status" /> 
+				</tree>
+			</field>
+		</record>
+		
+		<record id="cbpo_lg_renew_tree_view" model="ir.ui.view">
+			<field name="name">cbpo_lg_renew_tree</field>
+			<field name="model">cbpo.lg.renew</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="LG Renew" editable="bottom">
+                    <field name="cbpo_lg_renew_start_date"/>
+                    <field name="cbpo_lg_renew_end_date"/>
+                    <field name="cbpo_lg_renew_duration"/>
+                    <field name="cbpo_lg_renew_respon" widget='selection'/>
+                    <field name="cbpo_lg_renew_note"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="cbpo_lg_installment_tree_view" model="ir.ui.view">
+			<field name="name">cbpo_lg_installment_tree</field>
+			<field name="model">cbpo.lg.installment</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Installment Registrar " editable="bottom">
+                    <field name="cbpo_lg_installment_date"/>
+                    <field name="cbpo_lg_installment_amount"/>
+                    <field name="cbpo_lg_installment_note"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="cbpo_lg_action">
+            <field name="name">Core-BPO LG Mangment</field>
+            <field name="res_model">cbpo.lg</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record> 
+        
+		<menuitem id="cbpo_lg_id1" name="Letters of Guarantee" parent="cbpo_tender.cbpo_tender_2" action="cbpo_lg_action" sequence="19" />
+		
+    </data>
+</openerp>

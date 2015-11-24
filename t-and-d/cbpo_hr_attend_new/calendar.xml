@@ -1,0 +1,22 @@
+<openerp>
+    <data>
+
+
+
+        <record id="view_calendar_event_form2" model="ir.ui.view">
+            <field name="name">calendar.event.form2</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='allday']" position="after">
+                    <!-- Add new fields here -->
+                    <field name="daytype"  string="Day Type" attrs="{'invisible': [('allday', '=', True)], 'required': [('allday', '=', False)]}"     />
+
+                </xpath>
+
+            </field>
+        </record>
+
+</data>
+</openerp>

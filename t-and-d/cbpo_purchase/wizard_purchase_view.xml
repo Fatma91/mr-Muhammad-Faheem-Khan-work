@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_purchase_confirmation_wizard" model="ir.ui.view">
+            <field name="name">purchase.confirmation.wizard</field>
+            <field name="model">purchase.confirmation.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Select Other Supplier">
+                    <group>
+                        <group>
+                            <field name="partner_id" domain="[('supplier','=',True)]"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Generate RFQ." name="product_compute" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_purchase_confirmation_wizard" model="ir.actions.act_window">
+            <field name="name">Select Other Supplier</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.confirmation.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>

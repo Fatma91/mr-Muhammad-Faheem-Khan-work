@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+<!--         <record id="meeting_search_view" model="ir.ui.view">
+            <field name="name">meeting.search.form</field>
+            <field name="model">cbpo.meeting</field>
+            <field name="arch" type="xml">
+                <search string="meeting">
+                   <group  expand='0' string='Filter By...'>
+					   <filter string='Today' icon="terp-stock_symbol-selection" name="filter_date" domain="['|',('m_date','=','1900-01-01 00:00:00'),'&amp;',('m_date','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('m_date','&gt;=',time.strftime('%%Y-%%m-%%d 00:00:00'))]" context="{}"/>
+					   <filter string='Meeting' icon="terp-stock_symbol-selection" name="groupby_order" domain="[]" context="{'group_by': ['m_state'] }"/> 
+                   </group> 
+                </search>
+            </field>
+        </record> -->
+
+		
+		<record id="cbpo_tender_form_view" model="ir.ui.view">  
+			<field name="name">cbpo_tender_form</field>
+			<field name="model">cbpo.tender</field>
+			<field name="arch" type="xml">		
+				<form string="Tenders" version="7.0">
+					<header>
+					<div class="oe_button_box oe_right">
+						<button string="Letters of Guarantee"/>
+					</div>
+					</header>
+					<group>
+						<group>
+							<field name="cbpo_title"/>
+						</group>
+						<group>		
+							<field name="cbpo_type"/>
+							<field name="cbpo_scope"/>
+						</group>
+					</group>
+					<separator />
+					<group>
+						<group>
+							<field name="cbpo_start_date"/>
+							<field name="cbpo_deadline_tec_date"/> 
+							<field name="cbpo_due_tec_date"/> 
+						</group>
+						<group>		
+							<field name="cbpo_deadline_financial_date"/> 
+							<field name="cbpo_due_financial_date"/> 
+						</group>
+					</group>
+					<separator />
+					<group>
+						<group>
+							<separator string="Tender" colspan="2"/>
+							<field name="cbpo_specs_doc"/>
+							<field name="cbpo_fees"/>
+						</group>
+						<group>			
+							<separator string="Letters of Guarantee" colspan="2"/>
+							<field name="cbpo_lg"/>
+							<field name="cbpo_lg_value"/> 
+							<field name="cbpo_lg_duration"/> 	
+						</group>
+					</group>
+					<notebook>
+						<page string="Description">
+							<field name="cbpo_description"/>
+						</page>
+						<page string="The announcement of the tender data">
+							<field name="cbpo_advs"/> 
+						</page>
+<!-- 						<page string="المشاركون">
+							<field name="cbpo_partner" >
+                                <tree string="المشاركون" editable="bottom">
+                                    <field name="cbpo_partner"/>
+                                    <field name="name"/>
+                                    <field name="phone"/>
+                                    <field name="email"/>
+                                </tree>
+                            </field>
+						</page> -->
+						<page string="Participants">
+							<!-- <field name="cbpo_partner" widget="many2many" /> -->
+						</page>
+						<page string="Committee members">
+							<!-- <field name="cbpo_communty_members" widget="one2many_list"/>   -->
+						</page>
+					</notebook>
+				</form> 
+			</field>
+		</record>
+
+		<record id="cbpo_tender_tree_view" model="ir.ui.view">
+			<field name="name">cbpo_tender_tree</field>
+			<field name="model">cbpo.tender</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Tenders" >
+					<field name="cbpo_title" string="Subject"/>
+					<field name="cbpo_deadline_tec_date" string="Opening date"/>
+					<field name="cbpo_type" string="Type"/>
+					<field name="cbpo_scope" string="Case"/>
+				</tree>
+			</field>
+		</record>
+        <!-- &lt; meta http-equiv='refresh' content='30' /&gt; -->
+<!--         <record model="ir.actions.act_window" id="action_meeting">
+            <field name="name">Core-BPO Meeting</field>
+            <field name="res_model">cbpo.meeting</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,kanban</field>
+			<field name="search_view_id" ref="meeting_search_view"/>
+			<field name="context">{'search_default_filter_date': 1}</field>
+        </record>  -->
+		<record model="ir.actions.act_window" id="cbpo_tender_action">
+            <field name="name">Core-BPO Tender</field>
+            <field name="res_model">cbpo.tender</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+        </record> 
+
+		<menuitem id="cbpo_tender_2" name="Tenders" parent="account.menu_finance_receivables" sequence="15" />
+		<menuitem id="cbpo_tender_3" name="Tender add" parent="cbpo_tender_2" action="cbpo_tender_action" sequence="16" />
+		
+    </data>
+</openerp>

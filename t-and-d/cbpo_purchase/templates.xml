@@ -1,0 +1,127 @@
+<openerp>
+    <data>
+        <!--create add button to sales order by inheriting it's view -->
+        <record id="sale_view_order_form" model="ir.ui.view">
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='price_subtotal']" position="after">
+                    <!-- Add new fields here -->
+                    <field name="order_supplier_id" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='cancel']" position="after">
+                    <button name="action_to_purchase" states="draft,sent" string="To Purchase"
+                            groups="base.group_user" type="object"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="cbpo_purchase_order_form" model="ir.ui.view">
+            <field name="name">purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="attributes">
+                    <!-- Add new fields here -->
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//page[@string='Products']" position="attributes">
+                    <!-- Add new fields here -->
+                    <attribute name="string">BOQ</attribute>
+                </xpath>
+                <xpath expr="//field[@name='pricelist_id']" position="after">
+                    <!-- Add new fields here -->
+                    <field name="cbpo_proforma_invoice_no"/>
+                    <field name="cbpo_proforma_invoice_date"/>
+                </xpath>
+                <xpath expr="//page[@string='RFQ &amp; Bid']" position="attributes">
+                    <!-- Add new fields here -->
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='fiscal_position']" position="attributes">
+                    <!-- Add new fields here -->
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='minimum_planned_date']" position="attributes">
+                    <!-- Add new fields here -->
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <field name="picking_type_id" position="after">
+                    <field name="cbpo_delivery_term"/>
+                </field>
+                <xpath expr="//page[@string='Deliveries &amp; Invoices']" position="after">
+                    <!-- Add new fields here -->
+                    <page string="Dates">
+                        <group>
+                            <group>
+                                <field name="cbpo_proforma_receiving_date"/>
+                                <field name="cbpo_proforma_sending_to_accountant"/>
+                                <field name="cbpo_date_of_down_payment"/>
+                                <field name="cbpo_date_of_second_payment"/>
+                                <field name="cbpo_manufacturing_date"/>
+                                <field name="cbpo_date_of_delivery"/>
+                                <field name="cbpo_duration_of_manufacturing"/>
+                                <field name="cbpo_duration_of_cusrom_manuf"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Shipping Documents">
+                        <group>
+                            <group string="Confirm attachment">
+                                <field name="cbpo_commercial_invoice"/>
+                                <field name="cbpo_eur"/>
+                                <field name="cbpo_packing_list"/>
+                                <field name="cbpo_waybill"/>
+                                <field name="cbpo_bill_o_landing"/>
+                                <field name="cbpo_flight_invoice"/>
+                                <field name="cbpo_certificate_o_origin"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@string='BOQ']/field[@name='order_line']/tree[@string='Purchase Order Lines']/field[@name='product_id']" position="before">
+                    <!-- Add new fields here -->
+                    <field name="cbpo_partner_id" invisible="1"/>
+                    <field name="cbpo_product_category" domain="[('parent_id', '=', parent.cbpo_type)]" />
+                    <field name="cbpo_line_category" domain="[('parent_id', '=', cbpo_product_category)]" on_change="get_domain_category_id(cbpo_line_category)"/>
+                </xpath>
+                 <xpath expr="//page[@string='BOQ']/field[@name='order_line']/tree[@string='Purchase Order Lines']/field[@name='product_id']" position="attributes">
+                    <attribute name="string">Model Name/code</attribute>
+                </xpath>
+                <xpath expr="//page[@string='BOQ']/field[@name='order_line']/tree[@string='Purchase Order Lines']/field[@name='date_planned']" position="attributes">
+                    <attribute name="string">(exwork) Del. Date</attribute>
+                </xpath>
+                <xpath expr="//page[@string='BOQ']/field[@name='order_line']/tree[@string='Purchase Order Lines']/field[@name='product_qty']" position="attributes">
+                    <attribute name="string">QTY</attribute>
+                </xpath>
+                <xpath expr="//page[@string='BOQ']/field[@name='order_line']/tree[@string='Purchase Order Lines']/field[@name='product_id']" position="after">
+                    <!-- Add new fields here -->
+                    <field name="cbpo_supplier" invisible="1"/>
+                    <field name="cbpo_supplier_item_code"/>
+                </xpath>
+                <xpath expr="//page[@string='BOQ']/field[@name='order_line']/tree[@string='Purchase Order Lines']/field[@name='name']" position="after">
+                    <!-- Add new fields here -->
+                    <field name="cbpo_finishes" />
+                </xpath>
+                 <xpath expr="//page[@string='BOQ']/field[@name='order_line']/tree[@string='Purchase Order Lines']/field[@name='product_uom']" position="attributes">
+                    <!-- Add new fields here -->
+                    <attribute name="string">UOM</attribute>
+                </xpath>
+                <field name="origin" position="replace">
+                    <field name="origin" />
+                </field>
+                <field name="origin" position="after">
+                    <field name="cbpo_client_order_ref"/>
+                    <field name="cbpo_type" />
+                </field>
+                <xpath expr="//page[@string='BOQ']/field[@name='order_line']/tree[@string='Purchase Order Lines']/field[@name='price_subtotal']" position="after">
+                    <field name="cbpo_client_code"/>
+                    <field name="cbpo_floor" />
+                    <field name="cbpo_area" />
+                    <field name="cbpo_comments" />
+                    <field name="cbpo_select_line" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

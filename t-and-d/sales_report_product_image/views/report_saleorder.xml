@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_saleorder_document_inherit" inherit_id="cbpo_sales.sale_custom_template">
+
+            <xpath expr="//table/thead[@class='all']/tr[2]/td[6]" position="before">
+                <t>
+                    <td class="all">
+                       item Picture
+                    </td>
+                </t>
+            </xpath>
+            <xpath expr="//table/tbody[@class='sale_tbody all']/tr/td[6]" position="before">
+                <t t-if="o.image_sizes == 'image' and o.print_image ">
+                    <td class="all">
+                        <span t-field="l.product_id.image"
+                              t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}"/>
+                    </td>
+                </t>
+                <t t-if="o.image_sizes == 'image_medium' and o.print_image ">
+                    <td class="all">
+                        <span t-field="l.product_id.image_medium"
+                              t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}"/>
+                    </td>
+                </t>
+                <t t-if="o.image_sizes == 'image_small' and o.print_image ">
+                    <td class="all">
+                        <span t-field="l.product_id.image_small"
+                              t-field-options="{&quot;widget&quot;: &quot;image&quot;, &quot;class&quot;: &quot;img-rounded&quot;}"/>
+                    </td>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</openerp>

@@ -1,0 +1,102 @@
+<openerp>
+    <data>
+
+
+  <report id="report_hr_attendance_per_day"
+            string="Print TimeSheet"
+            model="hr.attendance2"
+            report_type="qweb-pdf"
+            name="cbpo_hr_attend_new.report_hr_attendance_per_day_template"/>
+
+
+
+
+        <template id="report_hr_attendance_per_day_template">
+            <!-- CSS goes in the document HEAD or added to your external stylesheet -->
+<style>
+    table, th, td {
+    border: 1px solid black;
+}
+table.gridtable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #666666;
+	border-collapse: collapse;
+}
+table.gridtable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #dedede;
+}
+table.gridtable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #666666;
+	background-color: #ffffff;
+}
+</style>
+
+            <t t-call="report.external_layout">
+            <div class="page">
+                 <h2 align="center" ><u> Time Sheet </u> </h2>
+
+
+            <table class="gridtable" align="center"  width="90%"  cellpadding="1" cellspacing="1" border="1"  >
+                  <tr>
+                      <td  align="center" >  <strong >Employee</strong > </td>
+                      <td  align="center" >  <strong > Day </strong > </td>
+                      <td  align="center" >  <strong > In</strong > </td>
+                      <td  align="center" >  <strong > Out </strong > </td>
+
+                      <td  align="center" >  <strong > Diff In </strong > </td>
+                      <td  align="center" >  <strong > Diff Out </strong > </td>
+                      <td  align="center" >  <strong > Deduct In </strong > </td>
+                      <td  align="center" >  <strong > Deduct Out </strong > </td>
+                      <td  align="center" >  <strong > OverTime In </strong > </td>
+
+
+                      <td  align="center" >  <strong > OverTime Out </strong > </td>
+
+                      <td  align="center" >  <strong > State </strong > </td>
+                      <td  align="center" >  <strong > OverNight </strong > </td>
+                      <td  align="center" >  <strong > Meal </strong > </td>
+                      <td  align="center" >  <strong > Excus IN </strong > </td>
+                      <td  align="center" >  <strong > Excus Out </strong > </td>
+
+                  </tr>
+                <t t-foreach="docs" t-as="o">
+                <tr>
+                  <td  align="center" > <span t-field="o.employee_id.name" />     </td>
+                  <td  align="center" >    <span t-field="o.day" />      </td>
+                  <td  align="center" >    <span t-field="o.time_in" />     </td>
+                    <td  align="center" >    <span t-field="o.time_out" />    </td>
+
+                  <td  align="center" >    <span t-field="o.diff_time_in" />   </td>
+                    <td  align="center" >    <span t-field="o.diff_time_out" />    </td>
+                  <td  align="center" >    <span t-field="o.discip_in" />   </td>
+                     <td  align="center" >    <span t-field="o.discip_out" />   </td>
+                  <td  align="center" >    <span t-field="o.overtime_in" />    </td>
+
+
+                  <td  align="center" >    <span t-field="o.overtime_out" />    </td>
+
+                  <td  align="center" >    <span t-field="o.state" />   </td>
+                  <td  align="center" >    <span t-field="o.overnight" />   </td>
+                  <td  align="center" >    <span t-field="o.meal" />    </td>
+                  <td  align="center" >    <span t-field="o.excus_data" />    </td>
+                  <td  align="center" >    <span t-field="o.excus_data2" />    </td>
+
+                </tr>
+                </t>
+            </table>
+                </div>
+            </t>
+        </template>
+
+</data>
+</openerp>

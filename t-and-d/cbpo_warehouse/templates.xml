@@ -1,0 +1,95 @@
+<openerp>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="cbpo_warehouse_date_form" model="ir.ui.view">
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@string='Additional Info']" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <page string="Dates" attrs="{'invisible': [('picking_type_code', '!=', 'incoming')]}">
+                        <group>
+                            <group>
+                                <field name="picking_type_code" invisible="1"/>
+                                <field name="cbpo_req_pick"/>
+                                <field name="cbpo_act_pick"/>
+                                <field name="cbpo_exp_dep"/>
+                                <field name="cbpo_act_dep"/>
+                                <field name="cbpo_exp_arr"/>
+                                <field name="cbpo_act_arr"/>
+                                <field name="cbpo_date_rec_ship_doc"/>
+                                <field name="cbpo_send_doc_account"/>
+                                <field name="cbpo_send_4_doc"/>
+                                <field name="cbpo_4_issue"/>
+                                <field name="cbpo_send_doc_clear"/>
+                                <field name="cbpo_clear_star"/>
+                                <field name="cbpo_ship_release"/>
+                                <field name="cbpo_delivery_cust"/>
+                            </group>
+                            <group string="Custome Clear's Fees">
+                                <field name="cbpo_exp_cheque_amount"/>
+                                <field name="cbpo_clear_exp"/>
+                                <field name="cbpo_act_amount"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
+                <!--<xpath expr="//field[@name='product_id']" position="before">-->
+                    <!--<field name="cbpo_client_code"/>-->
+                    <!--<field name="item_name"/>-->
+                    <!--<field name="cbpo_supplier"/>-->
+                <!--</xpath>-->
+
+            </field>
+        </record>
+
+        <!--&lt;!&ndash; Inherit Form View to Modify it &ndash;&gt;-->
+        <!--<record id="cbpo_warehouse_move_form" model="ir.ui.view">-->
+            <!--<field name="name">stock.move.form</field>-->
+            <!--<field name="model">stock.move</field>-->
+            <!--<field name="inherit_id" ref="stock.view_move_form"/>-->
+            <!--<field name="arch" type="xml">-->
+
+                <!--<field name="product_id" position="before">-->
+                    <!--<field name="cbpo_client_code"/>-->
+                    <!--<field name="item_name"/>-->
+                    <!--<field name="cbpo_supplier"/>-->
+                <!--</field>-->
+                <!--<field name="name" position="after">-->
+                    <!--<field name="cbpo_finishes"/>-->
+                    <!--<field name="cbpo_partner_id"/>-->
+                    <!--<field name="cbpo_supplier"/>-->
+                <!--</field>-->
+                <!--&lt;!&ndash;<xpath expr="//page[@string='Dates']" position="attributes">&ndash;&gt;-->
+                <!--&lt;!&ndash;<attribute name="attrs">{'invisible': [('picking_type_id.name', 'ilike', 'Receipts')]}</attribute>&ndash;&gt;-->
+                <!--&lt;!&ndash;</xpath>&ndash;&gt;-->
+
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="cbpo_warehouse_move_form" model="ir.ui.view">-->
+            <!--<field name="name">stock.move.form</field>-->
+            <!--<field name="model">stock.move</field>-->
+            <!--<field name="inherit_id" ref="stock.view_move_picking_form"/>-->
+            <!--<field name="arch" type="xml">-->
+
+                <!--<field name="product_id" position="before">-->
+                    <!--<field name="cbpo_client_code"/>-->
+                    <!--<field name="item_name"/>-->
+                    <!--<field name="cbpo_supplier"/>-->
+                <!--</field>-->
+                <!--<field name="name" position="after">-->
+                    <!--<field name="cbpo_finishes"/>-->
+                    <!--<field name="cbpo_partner_id"/>-->
+                    <!--<field name="cbpo_supplier"/>-->
+                <!--</field>-->
+                <!--&lt;!&ndash;<xpath expr="//page[@string='Dates']" position="attributes">&ndash;&gt;-->
+                <!--&lt;!&ndash;<attribute name="attrs">{'invisible': [('picking_type_id.name', 'ilike', 'Receipts')]}</attribute>&ndash;&gt;-->
+                <!--&lt;!&ndash;</xpath>&ndash;&gt;-->
+
+            <!--</field>-->
+        <!--</record>-->
+    </data>
+</openerp>

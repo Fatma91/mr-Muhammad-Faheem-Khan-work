@@ -1,0 +1,374 @@
+<openerp>
+    <data>
+        <!-- sale order line tree -->
+        <record id="sale_order_line_sequence_tree" model="ir.ui.view">
+            <field name="name">sale.order.line.sequence.tree</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_order_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_id']" position="after">
+                    <field name="sequence"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--&lt;!&ndash; sale order line form &ndash;&gt;-->
+        <!--<record id="sale_order_line_sequence_form" model="ir.ui.view">-->
+        <!--<field name="name">sale.order.line.sequence.form</field>-->
+        <!--<field name="model">sale.order.line</field>-->
+        <!--<field name="inherit_id" ref="purchase.purchase_order_line_form"/>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<xpath expr="//field[@name='name']" position="after">-->
+        <!--<field name="sequence"/>-->
+        <!--</xpath>-->
+        <!--</field>-->
+        <!--</record>-->
+
+
+        <!-- sale order line form no create -->
+        <record id="sale_order_line_sequence_form2" model="ir.ui.view">
+            <field name="name">sale.order.line.sequence.form2</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_order_line_form2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="sequence"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="cbpo_sales_order_tree" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//tree[@string='Quotation']" position="attributes">
+                    <attribute name="colors">grey:state=='cancel';green:state=='revised';blue:state in
+                        ('waiting_date','manual');red:state in ('invoice_except','shipping_except')
+                    </attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        Inherit Form View to Modify it
+        <record id="cbpo_sale_change" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="before">
+                    <field name="sequence"/>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="sequence"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']" position="attributes">
+                    <attribute name="context">{'order_line': order_line}</attribute>
+                </xpath>
+
+
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,progress,done"
+                           statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
+                </xpath>
+                <xpath expr="//button[@name='cancel']" position="after">
+                    <button name="revised_cancel" states="draft,sent" string="Revised Quotation"
+                            groups="base.group_user" type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='copy_quotation']" position="attributes">
+                    <attribute name="states">revised</attribute>
+                </xpath>
+
+                <!--<xpath expr="//form/sheet/h1/label[@string='Quotation']" position="attributes">-->
+                <!--<attribute name="attrs">{'invisible': [('cbpo_state','not in',('draft','sent'))]}</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//form/sheet/h1/label[@string='Sales Order']" position="attributes">-->
+                <!--<attribute name="attrs">{'invisible': [('cbpo_state','in',('draft','sent'))]}</attribute>-->
+                <!--</xpath>-->
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="cbpo_client_order_ref" class="oe_inline" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='project_id']" position="attributes">
+                    <attribute name="string">Project / Analytic</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='pricelist_id']" position="after">
+                    <field name="cbpo_subject"/>
+                    <field name="date_confirm"/>
+                </xpath>
+
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="cbpo_client_code"/>
+                    <field name="cbpo_floor"/>
+                    <field name="cbpo_area"/>
+                    <!--<field name="item_name"  on_change="get_domain_useer_id(item_name)"/>-->
+                    <field name="cbpo_product_category" domain="[('parent_id', '=', parent.cbpo_type)]"/>
+                    <field name="cbpo_line_category" domain="[('parent_id', '=', cbpo_product_category)]" on_change="get_domain_category_id(cbpo_line_category)"/>
+                </xpath>
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='product_id']" position="before">
+                    <field name="cbpo_client_code"/>
+                    <field name="cbpo_floor"/>
+                    <field name="cbpo_area"/>
+                    <!--<field name="item_name" on_change="get_domain_useer_id(item_name)"/>-->
+                    <field name="cbpo_product_category" domain="[('parent_id', '=', cbpo_type)]"/>
+                    <field name="cbpo_line_category" domain="[('parent_id', '=', cbpo_product_category)]" on_change="get_domain_category_id(cbpo_line_category)"/>
+                </xpath>
+
+                <!--<xpath expr="//field[@name='product_id']" position="attributes">-->
+                <!--<attribute name="domain">[('product_id.item_name_id.id', '=', item_name)]</attribute>-->
+                <!--</xpath>-->
+                <!--<xpath expr="//tree[@string='Sales Order Lines']/field[@name='product_id']" position="attributes">-->
+                <!--<attribute name="domain">[('product_id.item_name_id.id', '=', item_name)]</attribute>-->
+                <!--</xpath>-->
+                <xpath expr="//field[@name='project_id']" position="after">
+                    <field name="cbpo_attention_to" domain="[('parent_id', '=', partner_id)]"/>
+                    <field name="cbpo_attachment" String="Attachment"/>
+
+                </xpath>
+
+
+                <xpath expr="//field[@name='client_order_ref']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="cbpo_client_order_ref"/>
+                    <field name="cbpo_type"/>
+                </xpath>
+
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="cbpo_supplier"/>
+                    <field name="cbpo_supplier_item_code"/>
+                    <!--<field name="cbpo_finishes" widget="many2many_tags" placeholder="Tags..." style="width: 70%%" domain="[('product_product_id', '=', product_id)]"/>-->
+                    <field name="cbpo_finishes" domain="[('product_product_id', '=', product_id)]"/>
+                </xpath>
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='product_id']" position="after">
+                    <field name="cbpo_supplier"/>
+                    <field name="cbpo_supplier_item_code"/>
+                </xpath>
+
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='name']" position="after">
+                    <field name="cbpo_finishes" domain="[('product_product_id', '=', product_id)]"/>
+                </xpath>
+
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='price_subtotal']" position="replace">
+
+                </xpath>
+
+                <xpath expr="//field[@name='product_uom']" position="before">
+                    <label for="product_uom" string="UoM" groups="product.group_uom"/>
+                </xpath>
+
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='product_uom']" position="attributes">
+                    <attribute name="string">UoM</attribute>
+                </xpath>
+
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='discount']" position="after">
+                    <field name="cbpo_price_after_disc" string="Price after Discount"/>
+                    <field name="price_subtotal" string="Total after Discount"/>
+                </xpath>
+
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='tax_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='discount']" position="attributes">
+                    <attribute name="string">Disc. (%)</attribute>
+                </xpath>
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='discount']" position="before">
+                    <!--<field name="cbpo_discount_price"/>-->
+                    <field name="cbpo_total_price"/>
+                </xpath>
+
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='price_subtotal']" position="after">
+                    <!--<field name="cbpo_discount_price"/>-->
+                    <field name="cbpo_comments"/>
+                </xpath>
+
+                <xpath expr="//field[@name='address_allotment_id']" position="after">
+                    <field name="cbpo_price_after_disc" string="Price after Discount"/>
+                    <field name="price_subtotal" string="Total after Discount"/>
+                    <field name="cbpo_total_price"/>
+                    <field name="cbpo_comments"/>
+                </xpath>
+                <!--<xpath expr="//field[@name='cbpo_comments']" position="before">-->
+                <!--<field name="cbpo_total_price"/>-->
+                <!--&lt;!&ndash;<field name="cbpo_discount_price" string="Price after Discount"/>&ndash;&gt;-->
+                <!--</xpath>-->
+
+
+                <xpath expr="//page[@string='Order Lines']" position="after">
+                    <page string="Dates">
+                        <group>
+                            <group>
+                                <field name="cbpo_date_of_advance"/>
+                                <field name="cbpo_date_of_finishes" string="Date of finishes / Selection"/>
+                            </group>
+                            <group>
+                                <field name="cbpo_final_Layout_date"/>
+                                <field name="cbpo_expected_delivery_date"/>
+            <!-- fatma update here-->
+                                <!--<label for="cbpo_expected_delivery_weeks"/>-->
+                                <!--<div>-->
+                                    <!--<field name="cbpo_expected_delivery_weeks"-->
+                                           <!--class="oe_inline"-->
+                                           <!--style="vertical-align:baseline"/>weeks-->
+                                <!--</div>-->
+
+                            </group>
+                            <group>
+                                <field name="cbpo_contract_delivery_date"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+
+                <xpath expr="//page[@string='Other Information']" position="inside">
+                    <group>
+                        <group>
+                            <field name="cbpo_guarantee" string="Guarantee"/>
+                        </group>
+                        <group>
+                            <field name="cbpo_offer_validtiy" string="Offer Validity"/>
+                        </group>
+                    </group>
+                </xpath>
+            <!-- fatma end update-->
+
+                <xpath expr="//field[@name='fiscal_position']" position="replace">
+                    <field name="fiscal_position" invisible="1"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="cbpo_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.sale.stock</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit"/>
+            <field name="arch" type="xml">
+
+                <field name="incoterm" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+            </field>
+        </record>
+        <record id="cbpo_view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.sale.stock</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree//field[@name='product_uom_qty']" position="attributes">
+                    <attribute name="string">QTY</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_cbpo_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.sale.stock</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale_stock.view_order_form_inherit"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='warehouse_id']" position="attributes">
+                        <attribute name="invisible">True</attribute>
+                    </xpath>
+                    <xpath expr="//page[@string='Order Lines']" position="attributes">
+                        <!-- Add new fields here -->
+                        <attribute name="string">BOQ</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <!--<record id="cbpo_market_a" model="ir.ui.view">-->
+        <!--<field name="name">crm.lead.inherit.form</field>-->
+        <!--<field name="model">crm.lead</field>-->
+        <!--<field name="inherit_id" ref="marketing_crm.view_crm_lead_form"/>-->
+        <!--<field name="arch" type="xml">-->
+
+        <!--<xpath expr="//field[@name='campaign_id']" position="replace">-->
+        <!--<field name="campaign_id" invisible="1"/>-->
+        <!--</xpath>-->
+        <!--<xpath expr="//field[@name='source_id']" position="replace">-->
+        <!--<field name="source_id" invisible="1"/>-->
+        <!--</xpath>-->
+
+        <!--</field>-->
+        <!--</record>-->
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="cbpo_partner_change" model="ir.ui.view">
+            <field name="name">res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='ref']" position="attributes">
+                    <attribute name="string">Customer Code</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="cbpo_user_change" model="ir.ui.view">
+            <field name="name">res.users.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//field[@name='action_id']" position="after">
+                    <field name="cbpo_user_code"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="cbpo_contract_change" model="ir.ui.view">
+            <field name="name">analytic.analytic.account.form</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//form/sheet/notebook/page[@string='Contract Information']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="cbpo_product_v_change" model="ir.ui.view">
+            <field name="name">product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//tree[@string='Product Variants']" position="replace">
+                    <tree string="Product Variants">
+                        <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="description_sale" groups="base.group_sale_salesman"/>
+                        <field name="attribute_value_ids" widget="many2many_tags" invisible="1"/>
+                        <field name="lst_price" invisible="1"/>
+                        <field name="price" invisible="1"/>
+                        <field name="uom_id" invisible="1"/>
+                        <field name="ean13" invisible="1"/>
+                        <field name="state" invisible="1"/>
+                        <field name="product_tmpl_id" invisible="1"/>
+                    </tree>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</openerp>

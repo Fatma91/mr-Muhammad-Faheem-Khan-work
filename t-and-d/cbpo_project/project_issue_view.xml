@@ -1,0 +1,18 @@
+<openerp>
+    <data>
+         <record id="sale_view_order_form" model="ir.ui.view">
+            <field name="name">Project Issue Tracker Form</field>
+            <field name="model">project.issue</field>
+            <field name="inherit_id" ref="project_issue.project_issue_form_view"/>
+            <field name="arch" type="xml">
+                 <field name='user_id' position="before">
+                    <field name="cbpo_serial_no" />
+                 </field>
+                <field name='id' position="before">
+                    <field name="cbpo_invoice_no" />
+                    <field name="cbpo_date" />
+                 </field>
+            </field>
+         </record>
+    </data>
+</openerp>

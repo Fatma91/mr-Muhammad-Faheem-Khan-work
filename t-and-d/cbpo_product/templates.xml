@@ -1,0 +1,494 @@
+<openerp>
+    <data>
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">product.supplierinfo.form.view</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+            <field name="arch" type="xml">
+                <!--<field name="delay" position="before">-->
+                <!--<field name="production_time"-->
+                <!--on_change="onchange_time_amount(production_time, shipping_time, duty_clearance)"/>-->
+                <!--<field name="shipping_time"-->
+                <!--on_change="onchange_time_amount(production_time, shipping_time, duty_clearance)"/>-->
+                <!--<field name="duty_clearance"-->
+                <!--on_change="onchange_time_amount(production_time, shipping_time, duty_clearance)"/>-->
+                <!--</field>-->
+                <field name="delay" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <xpath expr="//field[@name='pricelist_ids']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
+         <record id="view_supplierinfo_tree" model="ir.ui.view">
+            <field name="name">product.supplierinfo.tree.view</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="min_qty" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+            </field>
+        </record>
+
+        <!--<record id="item_name_search_view" model="ir.ui.view">-->
+            <!--<field name="name">item.name.search</field>-->
+            <!--<field name="model">item.name</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<search string="Item Names">-->
+                    <!--<field name="name" string="Item Names"/>-->
+                    <!--<field name="parent_id"/>-->
+                <!--</search>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+        <!--<record id="item_name_list_view" model="ir.ui.view">-->
+            <!--<field name="name">item.name.list</field>-->
+            <!--<field name="model">item.name</field>-->
+            <!--<field name="priority">1</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<tree string="Item Names">-->
+                    <!--<field name="complete_name"/>-->
+                <!--</tree>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<record id="item_name_form_view" model="ir.ui.view">-->
+            <!--<field name="name">item.name.form</field>-->
+            <!--<field name="model">item.name</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Item Names">-->
+                    <!--<sheet>-->
+                        <!--<div class="oe_title">-->
+                            <!--<label for="name" class="oe_edit_only"/>-->
+                            <!--<h1>-->
+                                <!--<field name="name"/>-->
+                            <!--</h1>-->
+                        <!--</div>-->
+                        <!--<group>-->
+                            <!--<group name="parent" col="4">-->
+                                <!--<field name="parent_id"/>-->
+                                <!--<field name="type"/>-->
+                            <!--</group>-->
+                        <!--</group>-->
+                    <!--</sheet>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<record id="item_name_tree_view" model="ir.ui.view">-->
+            <!--<field name="name">item.name.tree</field>-->
+            <!--<field name="model">item.name</field>-->
+            <!--<field name="field_parent">child_id</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<tree toolbar="True" string="Item Names">-->
+                    <!--<field name="name"/>-->
+                <!--</tree>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<record id="item_name_action" model="ir.actions.act_window">-->
+            <!--<field name="name">Product Type</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">item.name</field>-->
+            <!--<field name="domain">[('parent_id','=',False)]</field>-->
+            <!--<field name="view_type">tree</field>-->
+            <!--<field name="view_id" ref="item_name_tree_view"/>-->
+            <!--<field name="help" type="html">-->
+                <!--<p>-->
+                    <!--Here is a list of all your products classified by category. You-->
+                    <!--can click a category to get the list of all products linked to-->
+                    <!--this category or to a child of this category.-->
+                <!--</p>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<menuitem-->
+                <!--action="item_name_action"-->
+                <!--id="cbpo_product.menu_item_name"-->
+                <!--parent="base.menu_product"-->
+                <!--sequence="30" groups="base.group_no_one"/>-->
+        <!--<menuitem name="Product Type" id="cbpo_product.menu_item_name2" action="item_name_action"-->
+                  <!--parent="purchase.menu_procurement_management_product" sequence="10"/>-->
+        <!--<record id="item_name_action_form" model="ir.actions.act_window">-->
+            <!--<field name="name">Product Type</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">item.name</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="search_view_id" ref="item_name_search_view"/>-->
+            <!--<field name="view_id" ref="item_name_list_view"/>-->
+        <!--</record>-->
+        <!--<menuitem action="item_name_action_form"-->
+                  <!--groups="base.group_no_one"-->
+                  <!--id="menu_item_name_action_form"-->
+                  <!--parent="product.prod_config_main" sequence="2"/>-->
+        <!--<menuitem action="item_name_action_form"-->
+                  <!--groups="base.group_no_one"-->
+                  <!--id="menu_item_name_action_form2"-->
+                  <!--parent="purchase.menu_product_in_config_purchase" sequence="2"/>-->
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="cbpo_item_name_form" model="ir.ui.view">
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <!--<xpath expr="//tree/field[@name='name']" position="before">-->
+                <!--<field name="list_price"/>-->
+                <!--</xpath>-->
+                <xpath expr="//page[@string='Accounting']" position="before">
+                    <page string="Finishes">
+                        <field name="product_attribute_line" widget="one2many_list">
+                            <tree string="Finishes" editable="bottom">
+                                <field name="product_attribute_id"/>
+                                <field name="product_product_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="cbpo_item_name_form" model="ir.ui.view">
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="account.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="attributes">
+                    <attribute name="string">Product Range</attribute>
+                </xpath>
+                <xpath expr="//label[@for='categ_id']" position="attributes">
+                    <attribute name="string">Product Type</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="cbpo_item_name_tree" model="ir.ui.view">
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="list_price" groups="base.group_sale_salesman"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="cbpo_product_normal_form_view" model="ir.ui.view">
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Accounting']" position="before">
+                    <page string="Finishes">
+                        <field name="product_attribute_line" widget="one2many_list">
+                            <tree string="Finishes" editable="bottom">
+                                <field name="product_attribute_id"/>
+                                <field name="product_product_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//label[@string='Product Name']" position="attributes">
+                    <attribute name="string">Model Name</attribute>
+                </xpath>
+                <xpath expr="//field[@name='type']" position="attributes">
+                    <attribute name="string">Inventory Type</attribute>
+                </xpath>
+                <xpath expr="//field[@name='default_code']" position="attributes">
+                    <attribute name="string">Model Code</attribute>
+                </xpath>
+                <!--<xpath expr="//field[@name='lst_price']" position="after">-->
+                    <!--<field name="cbpo_product_type"/>-->
+                <!--</xpath>-->
+                <xpath expr="//group[@string='Status']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//group[@name='sale_condition']" position="replace">
+                    <group name="sale_condition">
+                        <label for="installation_time"/>
+                        <div>
+                            <field name="installation_time" attrs="{'readonly':[('sale_ok','=',False)]}"
+                                   class="oe_inline"
+                                   style="vertical-align:baseline"/>days
+                        </div>
+                        <label for="sale_delay"/>
+                        <div>
+                            <field name="sale_delay" attrs="{'readonly':[('sale_ok','=',False)]}" class="oe_inline"
+                                   style="vertical-align:baseline"/>days
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="cbpo_item_name_form_2" model="ir.ui.view">
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Accounting']" position="before">
+                    <page string="Finishes">
+                        <field name="product_attribute_line" widget="one2many_list">
+                            <tree string="Finishes" editable="bottom">
+                                <field name="product_attribute_id"/>
+                                <field name="product_product_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//label[@string='Product Name']" position="attributes">
+                    <attribute name="string">Model Name</attribute>
+                </xpath>
+                <xpath expr="//group[@string='Status']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <!--<xpath expr="//group[@string='Sale Conditions']" position="attributes">-->
+                <!--<attribute name="invisible">True</attribute>-->
+                <!--</xpath>-->
+                <xpath expr="//page[@name='variants']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='list_price']" position="after">
+                    <!-- Add new fields here -->
+                    <field name="cbpo_amount_currency"
+                           on_change="onchange_amount_currency(cbpo_amount_currency, cbpo_currency_id)"/>
+                    <!--<field name="cbpo_product_type"/>-->
+                </xpath>
+                <xpath expr="//field[@name='list_price']" position="after">
+                    <!-- Add new fields here -->
+                    <field name="cbpo_currency_id"
+                           on_change="onchange_amount_currency(cbpo_amount_currency, cbpo_currency_id)"/>
+                </xpath>
+                <xpath expr="//field[@name='list_price']" position="replace">
+                    <label for="list_price" string="Sale Price"/>
+                    <div>
+                        <field name="list_price" class="oe_inline" style="vertical-align:baseline"/>(EGP)
+                    </div>
+                </xpath>
+                <xpath expr="//group[@name='sale_condition']" position="replace">
+                    <group name="sale_condition">
+                        <label for="installation_time"/>
+                        <div>
+                            <field name="installation_time" attrs="{'readonly':[('sale_ok','=',False)]}"
+                                   class="oe_inline"
+                                   style="vertical-align:baseline"/>days
+                        </div>
+                        <label for="sale_delay"/>
+                        <div>
+                            <field name="sale_delay" attrs="{'readonly':[('sale_ok','=',False)]}" class="oe_inline"
+                                   style="vertical-align:baseline"/>days
+                        </div>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- This change supplier on Product>>Procurments>>Spplier HAZEM 8/11-->
+        <record id="cbpo_supplier_form" model="ir.ui.view">
+            <field name="model">product.supplierinfo</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_code']" position="before">
+                    <group>
+                        <field name="cbpo_supplier_type"/>
+                        <field name="cbpo_production_time"
+                               on_change="onchange_time_amount(cbpo_production_time, cbpo_shipping_time, cbpo_duty_clearance,cbpo_production_time_non, cbpo_shipping_time_non, cbpo_duty_clearance_non)"
+                               attrs="{'invisible':[('cbpo_supplier_type','!=', 'standard')]}"/>
+                        <field name="cbpo_shipping_time"
+                               on_change="onchange_time_amount(cbpo_production_time, cbpo_shipping_time, cbpo_duty_clearance,cbpo_production_time_non, cbpo_shipping_time_non, cbpo_duty_clearance_non)"
+                               attrs="{'invisible':[('cbpo_supplier_type','!=', 'standard')]}"/>
+                        <field name="cbpo_duty_clearance"
+                               on_change="onchange_time_amount(cbpo_production_time, cbpo_shipping_time, cbpo_duty_clearance,cbpo_production_time_non, cbpo_shipping_time_non, cbpo_duty_clearance_non)"
+                               attrs="{'invisible':[('cbpo_supplier_type','!=', 'standard')]}"/>
+                        <field name="delay_stand" attrs="{'invisible':[('cbpo_supplier_type','!=', 'standard')]}"/>
+                    </group>
+                    <group>
+                        <field name="cbpo_production_time_non"
+                               on_change="onchange_time_amount(cbpo_production_time, cbpo_shipping_time, cbpo_duty_clearance,cbpo_production_time_non, cbpo_shipping_time_non, cbpo_duty_clearance_non)"
+                               attrs="{'invisible':[('cbpo_supplier_type','!=', 'non_standard')]}"/>
+                        <field name="cbpo_shipping_time_non"
+                               on_change="onchange_time_amount(cbpo_production_time, cbpo_shipping_time, cbpo_duty_clearance,cbpo_production_time_non, cbpo_shipping_time_non, cbpo_duty_clearance_non)"
+                               attrs="{'invisible':[('cbpo_supplier_type','!=', 'non_standard')]}"/>
+                        <field name="cbpo_duty_clearance_non"
+                               on_change="onchange_time_amount(cbpo_production_time, cbpo_shipping_time, cbpo_duty_clearance,cbpo_production_time_non, cbpo_shipping_time_non, cbpo_duty_clearance_non)"
+                               attrs="{'invisible':[('cbpo_supplier_type','!=', 'non_standard')]}"/>
+                        <field name="delay_non" attrs="{'invisible':[('cbpo_supplier_type','!=', 'non_standard')]}"/>
+                    </group>
+                    <group>
+                        <field name="cbpo_unit_price"  on_change="onchange_after_discount(cbpo_unit_price, cbpo_discount)"/>
+                        <field name="cbpo_discount"  on_change="onchange_after_discount(cbpo_unit_price, cbpo_discount)"/>
+                        <field name="cbpo_after_unit_price"/>
+                    </group>
+                </xpath>
+
+                <xpath expr="//field[@name='name']" position="replace">
+                    <field name="name" on_change="onchange_supplier_name(name)"/>
+                </xpath>
+                <xpath expr="//field[@name='product_name']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='min_qty']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='sequence']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_uom']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="cbpo_stock_product_form" model="ir.ui.view">
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="stock.product_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_routes']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//button[@string='Reordering Rules']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+         <record id="cbpo_stock_product_form2" model="ir.ui.view">
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="stock.product_template_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_routes']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//button[@string='Reordering Rules']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="cbpo_hide_event_ok_form" model="ir.ui.view">
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="event_sale.event_sale_product_template_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='event_ok']" position="attributes">
+                    <attribute name="string">test</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="cbpo_product_event_ok_form" model="ir.ui.view">
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="cbpo_code_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--<menuitem name="Product Range" parent="lunch.menu_lunch_config" id="lunch.menu_lunch_product_categories"-->
+                  <!--action="lunch.action_lunch_product_categories"/>-->
+
+        <!--<record model="ir.actions.act_window" id="lunch.action_lunch_product_categories">-->
+            <!--<field name="name">Product Range</field>-->
+            <!--<field name="res_model">lunch.product.category</field>-->
+            <!--<field name="view_mode">tree,form</field>-->
+            <!--<field name="help" type="html">-->
+                <!--<p class="oe_view_nocontent_create">-->
+                    <!--Click to create a lunch category.-->
+                <!--</p>-->
+                <!--<p>-->
+                    <!--Here you can find every lunch categories for products.-->
+                <!--</p>-->
+            <!--</field>-->
+        <!--</record>-->
+
+        <!--<record id="ct_name_search_view" model="ir.ui.view">-->
+            <!--<field name="name">cbpo.product.category.search</field>-->
+            <!--<field name="model">cbpo.product.category</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<search string="Product Category">-->
+                    <!--<field name="name" string="Item Names"/>-->
+                    <!--<field name="parent_id"/>-->
+                <!--</search>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+        <!--<record id="ct_name_list_view" model="ir.ui.view">-->
+            <!--<field name="name">cbpo.product.category.list</field>-->
+            <!--<field name="model">cbpo.product.category</field>-->
+            <!--<field name="priority">1</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<tree string="Product Category">-->
+                    <!--<field name="complete_name"/>-->
+                <!--</tree>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<record id="ct_name_form_view" model="ir.ui.view">-->
+            <!--<field name="name">cbpo.product.category.form</field>-->
+            <!--<field name="model">cbpo.product.category</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Product Category">-->
+                    <!--<sheet>-->
+                        <!--<div class="oe_title">-->
+                            <!--<label for="name" class="oe_edit_only"/>-->
+                            <!--<h1>-->
+                                <!--<field name="name"/>-->
+                            <!--</h1>-->
+                        <!--</div>-->
+                        <!--<group>-->
+                            <!--<group name="parent" col="4">-->
+                                <!--<field name="parent_id"/>-->
+                                <!--<field name="type"/>-->
+                            <!--</group>-->
+                        <!--</group>-->
+                    <!--</sheet>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<record id="ct_name_tree_view" model="ir.ui.view">-->
+            <!--<field name="name">cbpo.product.category.tree</field>-->
+            <!--<field name="model">cbpo.product.category</field>-->
+            <!--<field name="field_parent">child_id</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<tree toolbar="True" string="Product Category">-->
+                    <!--<field name="name"/>-->
+                <!--</tree>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+         <!--<record id="cbpo_action_lunch_product_categories1" model="ir.actions.act_window">-->
+            <!--<field name="name">Product Category</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">cbpo.product.category</field>-->
+            <!--<field name="domain">[('parent_id','=',False)]</field>-->
+            <!--<field name="view_type">tree</field>-->
+            <!--<field name="view_id" ref="ct_name_tree_view"/>-->
+            <!--<field name="help" type="html">-->
+                <!--<p>-->
+                    <!--Here is a list of all your products classified by category. You-->
+                    <!--can click a category to get the list of all products linked to-->
+                    <!--this category or to a child of this category.-->
+                <!--</p>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<menuitem-->
+                <!--action="cbpo_action_lunch_product_categories1"-->
+                <!--id="cbpo_product.menu_ct_name"-->
+                <!--parent="base.menu_product"-->
+                <!--sequence="30" groups="base.group_no_one"/>-->
+        <!--<menuitem name="Product Category" id="cbpo_product.menu_ct_name2" action="cbpo_action_lunch_product_categories1"-->
+                  <!--parent="purchase.menu_procurement_management_product" sequence="9"/>-->
+        <!--<record id="cbpo_action_lunch_product_categories2" model="ir.actions.act_window">-->
+            <!--<field name="name">Product Category</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">cbpo.product.category</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="search_view_id" ref="ct_name_search_view"/>-->
+            <!--<field name="view_id" ref="item_name_list_view"/>-->
+        <!--</record>-->
+        <!--<menuitem action="cbpo_action_lunch_product_categories2"-->
+                  <!--groups="base.group_no_one"-->
+                  <!--id="menu_ct_name_action_form"-->
+                  <!--parent="product.prod_config_main" sequence="3"/>-->
+        <!--<menuitem action="cbpo_action_lunch_product_categories2"-->
+                  <!--groups="base.group_no_one"-->
+                  <!--id="menu_ct_name_action_form2"-->
+                  <!--parent="purchase.menu_product_in_config_purchase" sequence="3"/>-->
+    </data>
+</openerp>

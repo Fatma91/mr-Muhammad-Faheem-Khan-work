@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+		
+		 <record id="view_hr_finger_tree" model="ir.ui.view">
+            <field name="name">hr.finger.conf.tree</field>
+            <field name="model">hr.finger.conf</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Fingerprint Configuration">
+
+						<field name="db"/>
+						<field name="dbname"/>
+						<field name="username"/>
+						<field name="password"/>
+						<field name="path"/>
+						<field name="otherdata"/>
+						<field name="active"/>
+                </tree>
+            </field>
+        </record>
+        
+
+      
+    <record id="view_hr_finger_conf" model="ir.ui.view">
+			<field name="name">hr.finger.conf.form</field>
+			<field name="model">hr.finger.conf</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Fingerprint Configuration">
+						<field name="db"/>
+						<field name="dbname"/>
+						<field name="username"/>
+						<field name="password"/>
+						<field name="path"/>
+						<field name="otherdata"/>
+						<field name="active"/>
+					 
+				</form>
+			</field>
+		</record>
+			<record id="action_hr_finger_conf_wizard" model="ir.actions.act_window">
+			<field name="name">Fingerprint Configuration</field>
+			<field name="res_model">hr.finger.conf</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+	 
+		</record>
+ 
+		
+  <menuitem action="action_hr_finger_conf_wizard" id="menu_hr_finger_conf" parent="hr.menu_hr_configuration"/>
+    </data>
+</openerp>

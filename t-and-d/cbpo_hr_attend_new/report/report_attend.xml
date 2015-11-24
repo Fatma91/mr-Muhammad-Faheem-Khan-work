@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <report
+            id="attendance2_report_1"
+            model="hr.attendance2"
+            string="Attendance Report"
+            report_type="qweb-pdf"
+            name="cbpo_hr_attend_new.report_attendance2_1"
+            file="cbpo_hr_attend_new.report_attendance2_1"
+        />
+
+<template id="report_attendance2_1">
+    <t t-call="report.html_container">
+         <!--<t t-foreach="docs" t-as="o">-->
+            <t t-call="report.external_layout">
+                 <div class="page">
+            <div class="oe_structure"/>
+            <div class="row">
+                    <h4>Report attendance Per Day </h4>
+                   <h4> Day from =  <span t-esc="day_from"/>  |  Day to =  <span t-esc="day_to"/></h4>
+                <h4> Employee :  <u><span t-esc="name_employee"/></u></h4>
+                    <hr/>
+
+ <!--<h2> employee_id ? :   <span t-esc="employee_id"/> </h2>-->
+
+                      <!--&lt;!&ndash;<tr   t-foreach="get_my_emplyee_name(  employee  )" t-as="hhh">&ndash;&gt;-->
+
+
+                    <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+
+
+
+
+                    <table dir="rtl" class="table table-condensed">
+
+                        <thead>
+                            <tr>
+                                <!--<th>employee</th>-->
+                                <th>اليوم</th>
+                                <th>التاريخ</th>
+                                 <th>البيان</th>
+                                <th>المشروع</th>
+
+                                 <th>الحضور</th>
+                                 <th>الانصراف</th>
+                                 <th> ساعت العمل</th>
+                                <th>اجازة</th>
+
+                                <th>غياب</th>
+                                <th> العقوبة </th>
+
+                                <th>الجزاءات</th>
+                                <th>الاضافى</th>
+                                 <th>المبيت</th>
+                                <th>الوجبة</th>
+
+                                <th>اذن</th>
+
+                            </tr>
+                        </thead>
+                        <tbody class="sale_tbody">
+
+                            <tr   t-foreach="mydata" t-as="d">
+
+                                <td class="text-center" >
+                                    <span t-esc="d['name_day']"/>
+                                </td>
+                                <td nowrap="nowrap">
+                                    <span t-esc="d['day']"/>
+                                </td>
+                                <td class="text-center" >
+                                    <span t-esc="d['comment']"/>
+                                </td>
+                                <td class="text-center" >
+                                    <span t-esc="d['project_name']"/>
+                                </td>
+
+
+                                <td class="text-center" >
+                                    <span t-esc="d['time_in']"/>
+                                </td>
+                                <td class="text-center" >
+                                    <span t-esc="d['time_out']"/>
+                                </td>
+                                <td class="text-center" >
+                                    <span t-esc="d['work_time']"/>
+                                </td>
+
+
+                                <td class="text-center" >
+                                   <span t-esc="d['holiday']"/>
+                                </td>
+                                <td class="text-center" >
+                                    <span t-esc="d['absence']"/>
+                                </td>
+                                <td class="text-center" >
+                                    <span t-esc="d['deduct_value']"/>
+                                </td>
+
+
+
+
+                                 <td class="text-center" >
+                                    <span t-esc="d['penalty']"/>
+                                </td>
+
+
+
+                                <td class="text-center" >
+                                    <span t-esc="d['overtime']"/>
+                                </td>
+                                <td class="text-center" >
+                                    <span t-esc="d['overnight']"/>
+                                </td>
+                               <td class="text-center" >
+                                    <span t-esc="d['meal']"/>
+                                </td>
+                                <td class="text-center" >
+                                    <span t-esc="d['excus']"/>
+                                </td>
+
+
+
+                            </tr>
+
+                            <!--total-->
+                            <tr   bgcolor="#CDCDCD" >
+
+                                <td class="text-center" colspan="6">
+                                                                                            الاجمالى
+                                </td>
+
+
+
+                                <td class="text-center">
+                                    <span t-esc="work_time_count"/>
+                                </td>
+
+
+                                <td class="text-center">
+                                     <span t-esc="holiday_count"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="absence_count"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="deduct_value_count"/>
+                                </td>
+
+                                 <td class="text-center">
+                                    <span  t-esc="penalty_count"/>
+                                </td>
+
+
+
+                                <td class="text-center">
+                                    <span t-esc="overtime_count"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="overnight_count"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="meal_count"/>
+                                </td>
+                                <td class="text-center">
+                                    <span t-esc="excus_count"/>
+                                </td>
+
+
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+
+
+
+
+
+
+
+        <!--#4 absence_count=0-->
+        <!--#5 overnight_count=0-->
+        <!--#6 excus_count=0-->
+        <!--#7 meal_count=0-->
+        <!--#8 penalty_count=0-->
+        <!--#9 overtime_count=0.0-->
+        <!--#10 deduct_in_count=0.0-->
+        <!--#11 deduct_out_count=0.0-->
+        <!--#12 work_time_mints_count=   work_time_count  -->
+                </div>  </div>
+            </t>
+
+             <!--</t>-->
+
+    </t>
+</template>
+</data>
+</openerp>

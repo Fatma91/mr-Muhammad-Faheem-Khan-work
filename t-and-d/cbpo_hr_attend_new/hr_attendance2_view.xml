@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="view_attendance2_form" model="ir.ui.view">
+			<field name="name">hr.attendance2.form</field>
+			<field name="model">hr.attendance2</field>
+			<field name="arch" type="xml">
+				<form string="Employee attendance2s" version="7.0">
+
+					<sheet>
+
+						<header>
+							<h1>Cbpo Attendance</h1>
+						</header>
+						<group>
+                            <field name="employee_id" />
+                            <field name="name" />
+                            <field name="day"  />
+					        <field name="time_in" />
+                            <field name="compute" invisible="1" />
+                            <field name="discip_in" invisible="0" />
+                            <field name="allowance_data" />
+                            <field name="excus_data" />
+                            <field name="mission_data" />
+                            <field name="overtime_in" />
+                            <field name="discip_in_id" invisible="0" />
+                            <field name="discip_in_id_count" invisible="0" />
+                            <field name="overtime_in" invisible="0" />
+                            <field name="overtime_in_id" invisible="0" />
+                            <field name="overtime_in_id_count" invisible="0" />
+                            <field name="diff_time_in" invisible="0" />
+                            <field name="schedule_time_in" invisible="0" />
+                            <field name="state" />
+                            <field name="time_out" />
+                            <field name="excus_data2" />
+                            <field name="mission_data2" />
+                            <field name="discip_out" invisible="0" />
+                            <field name="discip_out_id" invisible="0" />
+                            <field name="discip_out_id_count" invisible="0" />
+                            <field name="overtime_out" invisible="0" />
+                            <field name="overtime_out_id"  invisible="0"/>
+                            <field name="overtime_out_id_count"  invisible="0"/>
+                            <field name="overnight" />
+                            <field name="meal" />
+                            <field name="diff_time_out" invisible="0" />
+                            <field name="schedule_time_out"  invisible="0"/>
+
+
+                            <field name="schedule_time_out"  invisible="0"/>
+
+                            <field name="schedule_time_out"  invisible="0"/>
+
+
+                            <field name="absence"  invisible="0"/>
+
+                            <field name="one_log"  invisible="0"/>
+                            <field name="penalty"  invisible="0"/>
+
+
+                            <!--hashemn-->
+                            <!---->
+                                 <!--<field name="employee_id" />-->
+                            <!--<field name="name" />-->
+                            <!--<field name="day" />-->
+                            <!--<field name="time_in" />-->
+                            <!--<field name="compute" invisible="1" />-->
+                            <!--<field name="discip_in" invisible="0" />-->
+                            <!--<field name="discip_in_id" invisible="1" />-->
+                            <!--<field name="discip_in_id_count" invisible="1" />-->
+                            <!--<field name="overtime_in" invisible="1" />-->
+                            <!--<field name="overtime_in_id" invisible="1" />-->
+                            <!--<field name="overtime_in_id_count" invisible="1" />-->
+                            <!--<field name="diff_time_in" invisible="0" />-->
+                            <!--<field name="schedule_time_in" invisible="1" />-->
+                            <!--<field name="state" />-->
+                            <!--<field name="time_out" />-->
+                            <!--<field name="discip_out" invisible="0" />-->
+                            <!--<field name="discip_out_id" invisible="1" />-->
+                            <!--<field name="discip_out_id_count" invisible="1" />-->
+                            <!--<field name="overtime_out" invisible="1" />-->
+                            <!--<field name="overtime_out_id"  invisible="1"/>-->
+                            <!--<field name="overtime_out_id_count"  invisible="1"/>-->
+                            <!--<field name="diff_time_out" invisible="0" />-->
+                            <!--<field name="schedule_time_out"  invisible="1"/>-->
+
+
+
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="view_attendance2_tree" model="ir.ui.view">
+			<field name="name">hr.attendance2.tree</field>
+			<field name="model">hr.attendance2</field>
+			<field name="arch" type="xml">
+				<tree string="Employee attendances"
+					colors="blue:state == 'in'; red:state == 'out'; green:state == 'in_out'">
+					<field name="employee_id" />
+
+					<field name="day"  />
+					<field name="time_in" />
+                    <field name="compute"  invisible="1" />
+					<field name="discip_in" />
+                    <field name="allowance_data" />
+                    <field name="excus_data" />
+                    <field name="mission_data" />
+
+					<field name="discip_in_id_count" invisible="1" />
+                    <field name="overtime_in" />
+
+					<field name="overtime_in_id_count" invisible="1" />
+					<field name="diff_time_in" />
+					<field name="schedule_time_in" />
+					<field name="state" invisible="1" />
+					<field name="time_out" />
+                    <field name="discip_out" />
+                    <field name="excus_data2" />
+                    <field name="mission_data2" />
+
+					<field name="discip_out_id_count" invisible="1" />
+                    <field name="overtime_out" />
+                    <field name="overnight" />
+                    <field name="meal" />
+
+
+					<field name="overtime_out_id_count" invisible="1" />
+					<field name="diff_time_out" />
+					<field name="schedule_time_out" />
+
+
+
+                     <field name="absence"  invisible="0"/>
+
+
+                    <field name="one_log"  invisible="0"/>
+                    <field name="penalty"  invisible="0"/>
+				</tree>
+			</field>
+		</record>
+
+
+		<record id="open_view_attendance2" model="ir.actions.act_window">
+			<field name="name">Attendances Per Day</field>
+			<field name="res_model">hr.attendance2</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help">The Time Tracking functionality aims to manage
+				employee attendances from Sign in/Sign out actions. You can also
+				link this feature to an attendance device using OpenERP's web
+				service features.
+			</field>
+		</record>
+
+<!-- editable="bottom" -->
+        <record id="view_attendance3_tree" model="ir.ui.view">
+			<field name="name">hr.attendance3.tree</field>
+			<field name="model">hr.attendance3</field>
+			<field name="arch" type="xml">
+				<tree string="Employee  Month attendances" >
+                    <field name="month" />
+					<field name="employee_id" />
+
+                    <field name="meal_count" />
+                     <field name="overnight_count" />
+
+                    <field name="allowance_count" />
+
+                    <field name="excuse_count" />
+
+
+
+
+
+
+
+                    <field name="days_discip_in" />
+					<field name="total_discip_in" />
+                    <field name="total_overtime" />
+
+                    <field name="total_absence" />
+                    <field name="total_one_log" />
+                    <field name="total_penalties" />
+
+
+				</tree>
+			</field>
+		</record>
+
+
+
+
+        <record id="open_view_attendance3" model="ir.actions.act_window">
+			<field name="name">Attendances Per Month</field>
+			<field name="res_model">hr.attendance3</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="help">The Time Tracking functionality aims to manage
+				employee attendances from Sign in/Sign out actions. You can also
+				link this feature to an attendance device using OpenERP's web
+				service features.
+			</field>
+		</record>
+
+
+
+		<record id="view_hr_fingerprint_data_form" model="ir.ui.view">
+			<field name="name">hr.fingerprint_data.form</field>
+			<field name="model">hr.fingerprint_data</field>
+			<field name="arch" type="xml">
+				<form string="fingerprint data" version="7.0">
+
+					<sheet>
+						<header>
+							<h1>Attendance Fingerprint</h1>
+
+						</header>
+						<group>
+							<field name="name" />
+
+							<field name="fid" />
+							<field name="action" />
+						</group>
+
+						<templates>
+
+							<t t-name="kanban-box">
+								<div class="oe_kanban_vignette oe_semantic_html_override">
+
+
+								</div>
+							</t>
+						</templates>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="view_hr_fingerprint_data_tree" model="ir.ui.view">
+			<field name="name">hr.fingerprint_data.tree</field>
+			<field name="model">hr.fingerprint_data</field>
+			<field name="arch" type="xml">
+				<tree string="fingerprint data" editable="bottom"
+					colors="blue:compute == '0';  green:compute == '1'">
+					<field name="name" />
+
+					<field name="fid" />
+					<field name="action" />
+					<field name="compute" />
+
+				</tree>
+			</field>
+		</record>
+		<record id="action_fingerprint_data" model="ir.actions.act_window">
+			<field name="name">Attendance Fingerprint</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.fingerprint_data</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					<!-- Add Text Here -->
+				</p>
+				<p>
+					<!-- More details about what a user can do with this object will be 
+						OK -->
+				</p>
+			</field>
+		</record>
+
+
+
+
+        <record id="my_from_login" model="ir.ui.view">
+            <field name="name">hr.attendance.form</field>
+            <field name="model">hr.attendance</field>
+            <field name="arch" type="xml">
+                <form string="Employee attendances">
+                    <sheet>
+                    <group>
+                        <field name="name" readonly="1" />
+                        <field name="action"  readonly="1" />
+                         <!--<field name="data"/>-->
+                        <!--<field name="action_desc"/>-->
+                        <field name="last_login"  readonly="1" />
+                        <field name="last_logout"  readonly="1" />
+
+
+                    <field name="comment"/>
+                     <button name="update_login" type="object" string="Login / Logout" class="oe_highlight" />
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+        <!--<record id="action_log2" model="ir.actions.act_window">-->
+			<!--<field name="name">Log In Out</field>-->
+			<!--<field name="type">ir.actions.act_window</field>-->
+			<!--<field name="res_model">hr.attendance</field>-->
+			<!--<field name="view_mode">tree,form</field>-->
+            <!--<field name="view_id" ref="my_from_login" />-->
+			<!--<field name="help" type="html">-->
+				<!--<p class="oe_view_nocontent_create">-->
+					<!--&lt;!&ndash; Add Text Here &ndash;&gt;-->
+				<!--</p>-->
+				<!--<p>-->
+					<!--&lt;!&ndash; More details about what a user can do with this object will be-->
+						<!--OK &ndash;&gt;-->
+				<!--</p>-->
+			<!--</field>-->
+		<!--</record>-->
+
+
+        <record id="action_log" model="ir.actions.act_window">
+			<field name="name">Log In Out</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.attendance</field>
+			<!--<field name="view_mode">form</field>-->
+            <!--<field name="view_id" ref="my_from_login"/>-->
+
+            <field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="my_from_login" />
+			<field name="target">new</field>
+
+
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					<!-- Add Text Here -->
+				</p>
+				<p>
+					<!-- More details about what a user can do with this object will be
+						OK -->
+				</p>
+			</field>
+		</record>
+
+		<menuitem action="action_log" id="menu_action_log"
+			parent="hr_attendance.menu_hr_attendance" sequence="1" />
+
+        <menuitem action="action_fingerprint_data" id="menu_action_fingerprint_data"
+			parent="hr_attendance.menu_hr_attendance" sequence="2" />
+
+		<menuitem action="open_view_attendance2" id="menu_open_view_attendance2"
+			parent="hr_attendance.menu_hr_attendance" sequence="99" />
+        <menuitem action="open_view_attendance3" id="menu_open_view_attendance3"
+			parent="hr_attendance.menu_hr_attendance" sequence="100" />
+
+
+	</data>
+</openerp>
+
+

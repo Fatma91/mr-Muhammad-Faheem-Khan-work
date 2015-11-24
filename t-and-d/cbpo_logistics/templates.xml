@@ -1,0 +1,118 @@
+<openerp>
+    <data>
+        <!--=========================SALES LOGISTICS===========================================-->
+
+        <record id="cbpo_sales_tree_view_" model="ir.ui.view">
+            <field name="name">cbpo Sales Order</field>
+            <field name="model">sale.order</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="cbpo_date_of_advance"/>
+                    <field name="cbpo_date_of_finishes"/>
+                    <field name="cbpo_final_Layout_date"/>
+                    <field name="cbpo_expected_delivery_date"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="cbpo_action_orders_1" model="ir.actions.act_window">
+            <field name="name">Sales Logistics</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="cbpo_sales_tree_view_"/>
+        </record>
+
+        <menuitem id="cbpo_logistics_main_menu" name="Logistics" sequence="3"/>
+
+        <menuitem id="cbpo_sale_logistics_menu" name="Sales Logistics"
+                  parent="cbpo_logistics_main_menu"/>
+
+        <menuitem action="cbpo_action_orders_1" id="cbpo_menu_sale_order1"
+                  parent="cbpo_sale_logistics_menu"/>
+
+        <!--=========================PURCHASE LOGISTICS===========================================-->
+
+        <record id="cbpo_purchase_tree_view_" model="ir.ui.view">
+            <field name="name">cbpo Purchase Order</field>
+            <field name="model">purchase.order</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="cbpo_proforma_receiving_date"/>
+                    <field name="cbpo_proforma_sending_to_accountant"/>
+                    <field name="cbpo_date_of_down_payment"/>
+                    <field name="cbpo_manufacturing_date"/>
+                    <field name="cbpo_date_of_delivery"/>
+                    <field name="cbpo_duration_of_manufacturing"/>
+                    <field name="cbpo_duration_of_cusrom_manuf"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="cbpo_action_orders11_" model="ir.actions.act_window">
+            <field name="name">Purchase Logistics</field>
+            <field name="res_model">purchase.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="cbpo_purchase_tree_view_"/>
+            <!---->
+        </record>
+
+
+        <menuitem id="cbpo_purchase_logistics_menu" name="Purchase Logistics"
+                  parent="cbpo_logistics_main_menu"/>
+
+        <menuitem action="cbpo_action_orders11_" id="cbpo_menu_purchase_order1"
+                  parent="cbpo_purchase_logistics_menu"/>
+
+        <!--=========================WAREHOUSE LOGISTICS===========================================-->
+
+        <record id="cbpo_warehouse_tree_view_" model="ir.ui.view">
+            <field name="name">cbpo Sales Order</field>
+            <field name="model">stock.picking</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="cbpo_req_pick"/>
+                    <field name="cbpo_act_pick"/>
+                    <field name="cbpo_exp_dep"/>
+                    <field name="cbpo_act_dep"/>
+                    <field name="cbpo_exp_arr"/>
+                    <field name="cbpo_act_arr"/>
+                    <field name="cbpo_date_rec_ship_doc"/>
+                    <field name="cbpo_send_doc_account"/>
+                    <field name="cbpo_send_4_doc"/>
+                    <field name="cbpo_4_issue"/>
+                    <field name="cbpo_send_doc_clear"/>
+                    <field name="cbpo_clear_star"/>
+                    <field name="cbpo_ship_release"/>
+                    <field name="cbpo_delivery_cust"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="cbpo_action_orders111" model="ir.actions.act_window">
+            <field name="name">Warehouse Logistics</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="cbpo_warehouse_tree_view_"/>
+        </record>
+
+        <menuitem id="cbpo_warehouse_logistics_menu" parent="cbpo_logistics_main_menu"
+                  name="Warehouse Logistics"/>
+        <menuitem id="cbpo_menu_warehouse_order1" action="cbpo_action_orders111"
+                  parent="cbpo_warehouse_logistics_menu"/>
+    </data>
+</openerp>

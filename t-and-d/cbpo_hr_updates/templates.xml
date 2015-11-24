@@ -1,0 +1,81 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="update_hr_tabs">
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='work_location']" position="after">
+                    <group string="Education Information" colspan="2">
+                        <field name="cbpo_unversity_id"/>
+                        <field name="cbpo_faculty_id"/>
+                        <field name="cbpo_graduation_year"/>
+                        <field name="cbpo_grade"/>
+                        <field name="cbpo_department_id"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='notes']" position="after">
+                    <field name="cbpo_pres" placeholder="Pros" colspan="4"/>
+                    <field name="cbpo_cons" placeholder="Cons" colspan="4"/>
+                </xpath>
+                <xpath expr="//field[@name='address_home_id']" position="after">
+                    <field name="cbpo_phone"/>
+                    <field name="cbpo_work_mobile"/>
+                    <field name="cbpo_personal_mobile"/>
+					<field name="cbpo_emergency_num"/>
+                    <field name="cbpo_relation"/>
+                   
+                </xpath>
+                <xpath expr="//field[@name='birthday']" position="after">
+                    <!--<field name="birthday" on_change="onchange_birth_date(birthday)"/>-->
+                    <field name="cbpo_age"/>
+                </xpath>
+                <xpath expr="//field[@name='otherid']" position="attributes">
+                    <attribute name="string">Syndicate Id</attribute>
+                </xpath>
+                <xpath expr="//field[@name='marital']" position="after">
+                    <field name="cbpo_miliary"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="update_hr_tabs2" model="ir.ui.view">
+            <field name="name">hr.hr.employee.view.form2</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr_contract.hr_hr_employee_view_form2"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='vehicle_distance']" position="after">
+                    <field name="cbpo_social_ins_num"/>
+                    <field name="cbpo_social_basic_ins"/>
+                    <field name="cbpo_social_var_ins"/>
+					<field name="cbpo_date"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="update_hr_holidays_tab">
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='department_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="update_hr_holidays">
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='department_id']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</openerp>

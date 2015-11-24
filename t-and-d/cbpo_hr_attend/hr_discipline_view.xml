@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record id="hr_discipline_form" model="ir.ui.view">
+            <field name="name">hr.discipline.form</field>
+            <field name="model">hr.discipline</field>
+            <field name="arch" type="xml">
+                <form string="Discipline">
+                    <sheet>
+                        <group  col="4" colspan="4">
+                            <field name="daytype"/>
+							<field name="name"/>
+                            <field name="deductype"/>
+
+                        </group>
+
+                        <group  col="4" colspan="4">
+                        
+                            
+                            <field name="fromtime"/>
+
+                            <field name="totime" />
+                            <field name="t_from"  />
+                            <field name="t_to"/>
+                            <field name="d1"/>
+                            <field name="l1"/>
+                            <field name="d2"/>
+                            <field name="l2"/>
+                            <field name="d3"/>
+                            <field name="l3"/>
+                            <field name="d4"/>
+                            <field name="l4"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="hr_discipline_tree" model="ir.ui.view">
+            <field name="name">hr.discipline.tree</field>
+            <field name="model">hr.discipline</field>
+            <field name="arch" type="xml">
+                <tree string="Discipline" editable="bottom" colors="blue:daytype == 'early_out';red:daytype=='late_in';  green:daytype == 'late_out'" >
+					<field name="name"/>
+                    <field name="daytype"/>
+                    <field name="deductype"/>
+                    <field name="fromtime"/>
+                    <field name="totime"/>
+
+                    <field name="d1"/>
+                    <field name="l1"/>
+                    <field name="d2"/>
+                    <field name="l2"/>
+                    <field name="d3"/>
+                    <field name="l3"/>
+                    <field name="d4"/>
+                    <field name="l4"/>
+                    <field name="calendar_id"/>
+
+                    
+                    
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_hr_discipline" model="ir.actions.act_window">
+            <field name="name">Discipline</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.discipline</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+                <p>
+                    <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+
+    <menuitem  action="action_hr_discipline" id="menu_open_action_hr_discipline"
+                  parent="hr_attendance.menu_hr_attendance" sequence="105"/>
+
+
+
+
+
+    </data>
+</openerp>

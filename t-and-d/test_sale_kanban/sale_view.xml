@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- Add instructor field to existing view -->
+        <record model="ir.ui.view" id="view_sale_order_kanban">
+            <field name="name">saale.order.kanban</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="order_line"/>
+                    <field name="color"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div
+                                    t-attf-class="oe_kanban_color_{{kanban_getcolor(record.color.raw_value)}}
+                                oe_kanban_global_click_edit oe_semantic_html_override
+                                oe_kanban_card {{record.group_fancy==1 ? 'oe_kanban_card_fancy' : ''}}">
+                                <div class="oe_dropdown_kanban">
+                                    <!-- dropdown menu -->
+                                    <div class="oe_dropdown_toggle">
+                                        <i class="fa fa-bars fa-lg"/>
+                                        <ul class="oe_dropdown_menu">
+                                            <li>
+                                                <a type="delete">Delete</a>
+                                            </li>
+                                            <li>
+                                                <ul class="oe_kanban_colorpicker"
+                                                    data-field="color"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="oe_clear"></div>
+                                </div>
+                                <div t-attf-class="oe_kanban_content" class="text-center">
+                                    <!-- title -->
+
+                                    <field name="partner_id"/>
+
+                                    <field name="name"/>
+                                    <field name="date_order"/>
+                                    <br/>
+
+                                    <table class="table table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+
+                                                <th class="text-right">Quantity</th>
+                                                <th class="text-right">Unit Price</th>
+                                                <th class="text-right">Discount</th>
+                                                <th class="text-right">Subtotal</th>
+                                                <th class="text-right">Comments</th>
+
+                                            </tr>
+                                        </thead>
+
+
+                                        <tr t-foreach="record.order_line.raw_value" t-as="order_id">
+                                            <td>
+                                                <t t-esc="name"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="product_uom_qty"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="price_unit"/>
+
+                                            </td>
+                                            <td>
+                                                <t t-esc="discount"/>
+
+                                            </td>
+                                            <td>
+                                                <t t-esc="price_subtotal"/>
+                                            </td>
+                                            <td>
+                                                <t t-esc="cbpo_comments"/>
+                                            </td>
+
+
+                                        </tr>
+
+                                    </table>
+
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+    </data>
+</openerp>

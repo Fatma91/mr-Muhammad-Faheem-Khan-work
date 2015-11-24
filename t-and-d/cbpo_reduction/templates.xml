@@ -1,0 +1,32 @@
+<openerp>
+    <data>
+
+        <record id="cbpo_add_company_reduction" model="ir.ui.view">
+            <field name="name">res.company.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Configuration']//field[@name='currency_id']" position="after">
+                    <field name="cbpo_reduction" on_change="percentageReduction(cbpo_reduction)"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="cbpo_sale_change" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <tree position="attributes">
+
+                    <attribute name="colors">red:cbpo_calc0==True</attribute>
+                </tree>
+                <xpath expr="//tree[@string='Sales Order Lines']/field[@name='tax_id']" position="after">
+                    <field name="cbpo_calc0"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</openerp>

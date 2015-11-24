@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+
+        <record id="hr_discipline_form" model="ir.ui.view">
+            <field name="name">hr.discipline.form</field>
+            <field name="model">hr.discipline</field>
+            <field name="arch" type="xml">
+                <form string="Discipline">
+                    <sheet>
+                        <group  col="4" colspan="4">
+                            <field name="daytype"/>
+							<field name="name"/>
+                            <field name="deductype"/>
+
+                        </group>
+
+                        <group  col="4" colspan="4">
+                        
+                            
+                            <field name="fromtime"/>
+
+                            <field name="totime" />
+                            <field name="t_from"  />
+                            <field name="t_to"/>
+                            <field name="d1"/>
+                            <field name="l1"/>
+                            <field name="d2"/>
+                            <field name="l2"/>
+                            <field name="d3"/>
+                            <field name="l3"/>
+                            <field name="d4"/>
+                            <field name="l4"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record id="hr_discipline_tree" model="ir.ui.view">
+            <field name="name">hr.discipline.tree</field>
+            <field name="model">hr.discipline</field>
+            <field name="arch" type="xml">
+                <tree string="Discipline" editable="bottom" colors="blue:daytype == 'early_out';red:daytype=='late_in';  green:daytype == 'late_out'" >
+					<field name="name"/>
+                    <field name="daytype"/>
+                    <field name="deductype"/>
+                    <field name="fromtime"/>
+                    <field name="totime"/>
+
+                    <field name="d1"/>
+                    <field name="l1"/>
+                    <field name="d2"/>
+                    <field name="l2"/>
+                    <field name="d3"/>
+                    <field name="l3"/>
+                    <field name="d4"/>
+                    <field name="l4"/>
+                    <field name="calendar_id"/>
+
+
+                    
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_hr_discipline" model="ir.actions.act_window">
+            <field name="name">Discipline</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.discipline</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+                <p>
+                    <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+
+    <menuitem  action="action_hr_discipline" id="menu_open_action_hr_discipline"
+                  parent="hr_attendance.menu_hr_attendance" sequence="105"/>
+
+
+        <!--allllllow-->
+
+
+
+        <record id="hr_allowance_form" model="ir.ui.view">
+            <field name="name">hr.allowance.form</field>
+            <field name="model">hr.allowance</field>
+            <field name="arch" type="xml">
+                <form string="Allowance">
+                    <sheet>
+                        <group  col="2" colspan="2">
+                            <field name="name"/>
+                            <field name="daytype"/>
+                            <field name="repetition"/>
+
+
+                            <field name="fromtime"/>
+                            <field name="totime"/>
+
+
+                            <field name="tt_from"/>
+                            <field name="tt_to"/>
+
+                            <field name="calendar_id"/>
+                         </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record id="hr_allowance_tree" model="ir.ui.view">
+            <field name="name">hr.allowance.tree</field>
+            <field name="model">hr.allowance</field>
+            <field name="arch" type="xml">
+                <tree string="Allowance" editable="bottom"   >
+					<field name="name"/>
+
+                    <field name="daytype"/>
+                    <field name="repetition"/>
+                     <field name="fromtime"/>
+                    <field name="totime"/>
+                     <field name="tt_from"/>
+                       <field name="tt_to"/>
+
+                    <field name="calendar_id"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_hr_allowance" model="ir.actions.act_window">
+            <field name="name">Allowance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.allowance</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+                <p>
+                    <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+   <menuitem  action="action_hr_allowance" id="menu_open_action_hr_allowance"
+                  parent="hr_attendance.menu_hr_attendance" sequence="106"/>
+
+
+        <!--end allowance-->
+
+
+         <!--allllllow-->
+
+
+
+        <record id="hr_excuse_form" model="ir.ui.view">
+            <field name="name">hr.excuse.form</field>
+            <field name="model">hr.excuse</field>
+            <field name="arch" type="xml">
+                <form string="Excuse">
+
+                     <header>
+
+                        <button states="Draft"  string="Approved" name="action_approved" icon="kanban-apply"
+                                groups="cbpo_hr_holidays.group_hr_manger_holidays"  class="oe_highlight"  type="object"   >
+                              </button>
+                        <button  states="Approved"  string="Draft" name="action_draft"  icon="terp-emblem-important"  type="object"  />
+
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Approved"/>
+                    </header>
+
+
+                    <sheet>
+                        <group  col="4" colspan="4">
+                            <field name="name"/>
+                            <field name="employee_id"/>
+
+                            <field name="type"/>
+                            <field name="daytype"/>
+                            <field name="day"/>
+                            <field name="timeexcuse"/>
+                            <field name="day_excuse"/>
+                            <field name="time_excuse"/>
+                            <field name="allow"/>
+
+                            <field name="note"/>
+
+                         </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+
+        <record id="hr_excuse_tree" model="ir.ui.view">
+            <field name="name">hr.excuse.tree</field>
+            <field name="model">hr.excuse</field>
+            <field name="arch" type="xml">
+                <tree string="Excuse" editable="bottom"   colors="green:state=='Approved';red:state=='Draft'">
+                            <field name="name"/>
+                            <field name="employee_id" options="{'no_create': True}"  />
+                            <field name="type"/>
+                            <field name="daytype"/>
+                            <field name="day"/>
+                            <field name="timeexcuse"/>
+                            <field name="day_excuse"/>
+                            <field name="time_excuse"/>
+                            <field name="state" readonly="1"/>
+                                                <!--   icon="terp-project"   -->
+                            <button states="Draft"  string="Approved" name="action_approved" icon="kanban-apply"  class="oe_highlight"  type="object"   >
+                                  </button>
+                            <button  states="Approved"  string="Draft" name="action_draft"  icon="terp-emblem-important"  type="object"  />
+
+
+                </tree>
+            </field>
+        </record>
+
+        <!--<record id="action_hr_excuse" model="ir.actions.act_window">-->
+            <!--<field name="name">Excuse</field>-->
+            <!--<field name="type">ir.actions.act_window</field>-->
+            <!--<field name="res_model">hr.excuse</field>-->
+            <!--<field name="view_mode">tree,form</field>-->
+            <!--<field name="help" type="html">-->
+                <!--<p class="oe_view_nocontent_create">-->
+                    <!--&lt;!&ndash; Add Text Here &ndash;&gt;-->
+                <!--</p>-->
+                <!--<p>-->
+                    <!--&lt;!&ndash; More details about what a user can do with this object will be OK &ndash;&gt;-->
+                <!--</p>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+<!--excuse user -->
+
+
+
+          <!--<record id="hr_excuse_form2" model="ir.ui.view">-->
+            <!--<field name="name">hr.excuse.form</field>-->
+            <!--<field name="model">hr.excuse</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Excuse" edit="0">-->
+                    <!--<header>-->
+                    <!--<field name="state" widget="statusbar" statusbar_visible="Draft,Approved"/>-->
+                    <!--</header>-->
+
+                    <!--<sheet>-->
+                        <!--<group  col="2" colspan="2">-->
+                            <!--<field name="name"/>-->
+                            <!--<field name="type"/>-->
+                            <!--<field name="daytype"/>-->
+                            <!--<field name="day"/>-->
+                            <!--<field name="timeexcuse"/>-->
+                            <!--<field name="day_excuse"/>-->
+                            <!--<field name="time_excuse"/>-->
+                            <!--<field name="employee_id" options="{'no_create': True}"  />-->
+                            <!--<field name="note"/>-->
+
+                         <!--</group>-->
+
+
+                    <!--</sheet>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+
+        <record id="hr_excuse_tree2" model="ir.ui.view">
+            <field name="name">hr.excuse.tree</field>
+            <field name="model">hr.excuse</field>
+            <field name="arch" type="xml">
+                <tree string="Excuse" edit="0"  colors="blue:(type=='Mission' and state=='Approved');gray:(type=='Mission' and state=='Draft');green:(type=='Excuse' and state=='Approved');red:(type=='Excuse' and state=='Draft')">
+                            <field name="name"/>
+                     <field name="employee_id"/>
+                            <field name="daytype"/>
+                    <field name="day"/>
+                            <field name="type"/>
+
+
+                            <field name="timeexcuse"/>
+                            <field name="day_excuse" invisible="1"/>
+
+                            <field name="time_excuse" invisible="1"/>
+
+                            <field name="state" readonly="1"/>
+                                                <!--   icon="terp-project"   -->
+
+
+                    <field name="allow" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+        <record id="action_hr_excuse" model="ir.actions.act_window">
+            <field name="name">Excuse / Mission</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.excuse</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="hr_excuse_tree2"/>
+            <!--<field name="domain">[]</field>-->
+            <field name="domain">['|',('employee_id.user_id.id','=',uid),('employee_id.parent_id.user_id.id','=',uid)]</field>
+
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+                <p>
+                    <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+
+
+         <record id="action_hr_excuse_approved" model="ir.actions.act_window">
+            <field name="name">Excuse / Mission All</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.excuse</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="hr_excuse_tree2"/>
+            <!--<field name="domain">[]</field>-->
+            <field name="domain">[]</field>
+
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+                <p>
+                    <!-- More details about what a user can do with this object will be OK -->
+                </p>
+            </field>
+        </record>
+   <menuitem  action="action_hr_excuse" groups="base.group_user" id="menu_open_action_hr_excuse"
+                  parent="hr_attendance.menu_hr_attendance" sequence="106"/>
+
+        <menuitem  action="action_hr_excuse_approved" groups="cbpo_hr_holidays.group_hr_officer_holidays"
+                   id="menu_open_action_hr_excuse_approved" parent="hr_attendance.menu_hr_attendance" sequence="106"/>
+
+    <!--<menuitem  action="action_hr_excuse2" id="menu_open_action_hr_excuse2"-->
+                  <!--parent="hr_attendance.menu_hr_attendance" sequence="107"/>-->
+
+
+        <!--end excuse-->
+
+
+
+
+    </data>
+</openerp>

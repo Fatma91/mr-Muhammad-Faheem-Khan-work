@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="td_custom_furniture_offer">
+            <div class="header">
+                <div class="row">
+                    <div class="col-xs-9">
+                        <p style="padding-top: 20px; margin-left: 30%;">TD Design Furniture Offer</p>
+                    </div>
+                    <div class="col-xs-3">
+                        <img src='/cbpo_report_template/static/src/img/yarab.jpeg'
+                             style="max-height: 50px;padding-top:10px"/>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </data>
+</openerp>

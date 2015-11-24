@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="view_hr_attendance_update" model="ir.ui.view">
+			<field name="name">hr.attendance.update.form</field>
+			<field name="model">hr.attendance.update</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Idea Cleanup Wizard">
+					<group colspan="4">
+						<field name="db" />
+					</group>
+					<group colspan="4">
+						<field name="dbname" />
+						<field name="username" />
+						<field name="password" />
+						<field name="path" />
+						<field name="useingconf" string="Using Data Configuration" />
+					</group>
+					<group colspan="4">
+						<button string="Close" special="cancel" icon="gtk-cancel" />
+						<button string="Update" name="update" type="object" icon="gtk-ok" />
+
+					</group>
+				</form>
+			</field>
+		</record>
+
+
+
+		<record id="view_hr_compute_update" model="ir.ui.view">
+			<field name="name">hr.attendance.update.form.compute</field>
+			<field name="model">hr.attendance.update</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Idea Cleanup Wizard">
+
+
+
+                    <group colspan="6">
+
+						<field name="month" />
+                        <field name="year" />
+
+					</group>
+					<group colspan="1">
+
+
+
+
+					 <button string="Step 1 Copy FINGER PRINT Data" name="attend_set_data" type="object" icon="terp-project" />
+                        <button string="Step 2.1 Attend Compute" name="attend_compute" type="object" icon="terp-project" />
+                        <button string="Step 2.2 Update Attend Compute" name="update_attend_compute" type="object" icon="terp-project" />
+
+                         <button string="Step 3  Attendances Month Compute" name="attend_month_compute" type="object" icon="terp-project" />
+
+					</group>
+				</form>
+			</field>
+		</record>
+
+        <record id="action_hr_compute_update_wizard2" model="ir.actions.act_window">
+			<field name="name">Compute Attendance</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.attendance.update</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_hr_compute_update" />
+			<field name="target">new</field>
+		</record>
+
+		<record id="action_hr_attendance_update_wizard" model="ir.actions.act_window">
+			<field name="name">Update Attendance</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.attendance.update</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_hr_attendance_update" />
+			<field name="target">new</field>
+		</record>
+
+
+		<menuitem action="action_hr_attendance_update_wizard" id="menu_hr_attendance_update"
+			parent="hr.menu_hr_configuration" />
+        <menuitem action="action_hr_compute_update_wizard2" id="menu_hr_compute_update2"
+			parent="hr_attendance.menu_hr_attendance" sequence="200"  />
+
+
+
+
+	</data>
+</openerp>

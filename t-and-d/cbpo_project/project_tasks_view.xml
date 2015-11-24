@@ -1,0 +1,44 @@
+<openerp>
+    <data>
+         <record id="sale_view_task_form1" model="ir.ui.view">
+            <field name="name">project.task.form</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+                <field name="reviewer_id" position="after">
+                    <field name="an_account_id" invisible="1"/>
+                    <field name="sale_id" domain="[('project_id','=',an_account_id)]"/>
+                </field>
+                <field name='date_last_stage_update' position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </field>
+                <xpath expr="//tree[@string='Task Work']/field[@name='name']" position="after">
+                    <field name="sale_line_id" domain="[('order_id','=',parent.sale_id)]" on_change="get_work_members(sale_line_id)"/>
+                    <field name="product_qty"/>
+                    <field name="planned_qty"/>
+                    <field name="planned_duration"/>
+                    <field name="qty_done"/>
+                    <field name="all_befor_time"/>
+                    <field name="planned_start"/>
+                </xpath>
+                 <!--<xpath expr="//tree[@string='Task Work']/field[@name='user_id']" position="attributes">-->
+                     <!--<attribute name="domain">[('id','in',parent.project_id.name.members)]</attribute>-->
+                <!--</xpath>-->
+            </field>
+         </record>
+         <!--<record id="sale_view_task_form2" model="ir.ui.view">-->
+            <!--<field name="name">project.task.form</field>-->
+            <!--<field name="model">project.task</field>-->
+            <!--<field name="inherit_id" ref="project.view_task_form2"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<field name="reviewer_id" position="after">-->
+                    <!--<field name="an_account_id" invisible="1"/>-->
+                    <!--<field name="sale_id" domain="[('project_id','=',an_account_id)]"/>-->
+                <!--</field>-->
+                <!--<field name='date_last_stage_update' position="attributes">-->
+                    <!--<attribute name="invisible">True</attribute>-->
+                <!--</field>-->
+            <!--</field>-->
+         <!--</record>-->
+    </data>
+</openerp>

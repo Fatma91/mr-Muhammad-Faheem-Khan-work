@@ -1,0 +1,161 @@
+<openerp>
+    <data>
+
+
+
+<!--<record id="hr_contract_view_search" model="ir.ui.view">-->
+            <!--<field name="name">hr.contract.view.search</field>-->
+            <!--<field name="model">hr.contract</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<search string="Search Contract">-->
+                   <!--<field name="name" string="Contracts"/>-->
+                   <!--<field name="date_start"/>-->
+                   <!--<field name="date_end"/>-->
+                   <!--<field name="working_hours"/>-->
+                   <!--<field name="employee_id"/>-->
+
+                   <!--<group expand="0" string="Group By">-->
+                       <!--<filter string="End Date" icon="terp-personal" domain="[('date_end_month','&gt;=',current_date),('date_end','&lt;=',current_date)]"  context="{'group_by':'employee_id'}"/>-->
+
+                       <!--&lt;!&ndash;<filter string="Employee" icon="terp-personal" domain="[]" context="{'group_by':'employee_id'}"/>&ndash;&gt;-->
+                       <!--&lt;!&ndash;<filter string="Working Schedule" icon="terp-go-week" domain="[]" context="{'group_by':'working_hours'}"/>&ndash;&gt;-->
+                       <!--&lt;!&ndash;<filter string="Job" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'job_id'}"/>&ndash;&gt;-->
+                       <!--&lt;!&ndash;<filter string="Contract Type" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'type_id'}"/>&ndash;&gt;-->
+                   <!--</group>-->
+               <!--</search>-->
+            <!--</field>-->
+        <!--</record>-->
+          <!--<record model="ir.ui.view" id="view_hr_contract_filter_les_one_month">-->
+            <!--<field name="name">view_hr_contract_filter_les_one_month</field>-->
+            <!--<field name="model">hr.contract</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<search string="Hr Employee Search">-->
+                    <!--&lt;!&ndash;<field name="employee_id" string="Employee"/>  <separator/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="date_end"/>  <separator/>&ndash;&gt;-->
+                    <!--<filter string="Les Than Month" name="les_one_month" domain="[('date_end_month','&gt;=',current_date),('date_end','&lt;=',current_date)]" />-->
+
+                    <!--&lt;!&ndash;<separator/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<filter string="My Attendance" domain="[('employee_id.user_id.id', '=', uid)]" />&ndash;&gt;-->
+                    <!--&lt;!&ndash;<field name="employee_id"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<group expand="0" string="Group By">&ndash;&gt;-->
+                        <!--&lt;!&ndash;<filter name="employee" string="Employee" context="{'group_by':'employee_id'}"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<separator/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<filter name="groupby_name" string="Month" context="{'group_by':'name'}"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</group>&ndash;&gt;-->
+                <!--</search>-->
+            <!--</field>-->
+        <!--</record>-->
+
+
+        <record id="hr_contract_view_form3" model="ir.ui.view">
+            <field name="name">hr.contract.form3</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='wage']" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <field name="net_salary"   />
+                    <field name="medical_insurance_number"  />
+                    <field name="medical_insurance_amount"  />
+                    <field name="date_end_month"  invisible="1" />
+                    <field name="date_end_week" invisible="1"  />
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="hr.view_employee_form3" model="ir.ui.view">
+            <field name="name">hr.employee.form3</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='work_location']" position="after">
+                    <!-- Add your fields or attributes here -->
+                    <field name="employment_date"   />
+
+
+
+
+                </xpath>
+
+                 <!--<xpath expr="//field[@name='identification_id']" position="after">-->
+                    <!--&lt;!&ndash; Add your fields or attributes here &ndash;&gt;-->
+                    <!--<field name="id_ok"   />-->
+
+
+                <!--</xpath>-->
+
+
+                     <!--<field name="identification_id" groups="base.group_hr_user"/>-->
+
+            </field>
+        </record>
+
+
+
+         <!--<record id="hr_contract_view_search_hashem" model="ir.ui.view">-->
+            <!--<field name="name">hr.contract.view.search.hashem</field>-->
+            <!--<field name="model">hr.contract</field>-->
+            <!--<field name="inherit_id" ref="hr_contract.hr_contract_view_search" />-->
+            <!--<field name="arch" type="xml">-->
+
+               <!--&lt;!&ndash; add your filtre at the end &ndash;&gt;-->
+                <!--<xpath expr="filter[@string='Employee']"-->
+                    <!--position="after">-->
+                     <!--<filter string="My Filtre "-->
+                            <!--domain="[('date_end_month', '=', '2015-08-14')]" />-->
+                <!--</xpath>-->
+
+               <!--&lt;!&ndash; add your group at the end &ndash;&gt;-->
+
+                <!--</field>-->
+            <!--</record>-->
+
+
+
+           <record id="hr_contract_view_search2" model="ir.ui.view">
+            <field name="name">hr.contract.view.search</field>
+            <field name="model">hr.contract</field>
+            <field name="arch" type="xml">
+                <search string="Search Contract">
+
+
+                   <field name="name" string="Contracts"/>
+                   <field name="date_start"/>
+                   <field name="date_end"/>
+                   <field name="working_hours"/>
+                   <field name="employee_id"/>
+
+                   <group expand="0" string="Filter">
+                 <filter string="Last Month End Date"  domain="[('date_end_month','&lt;=',current_date) ,('date_end','&gt;=',current_date) ]"  />
+
+                  <filter string="Last 2Weeks End Training Date"  domain="[('date_end_week','&lt;=',current_date) ,('trial_date_end','&gt;=',current_date) ]"  />
+
+                     </group>
+                   <group expand="0" string="Group By">
+
+
+                       <filter string="Employee" icon="terp-personal" domain="[]" context="{'group_by':'employee_id'}"/>
+                       <filter string="Working Schedule" icon="terp-go-week" domain="[]" context="{'group_by':'working_hours'}"/>
+                       <filter string="Job" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'job_id'}"/>
+                       <filter string="Contract Type" icon="terp-stock_symbol-selection" domain="[]" context="{'group_by':'type_id'}"/>
+                   </group>
+               </search>
+            </field>
+        </record>
+
+   <record id="hr_contract.action_hr_contract" model="ir.actions.act_window">
+            <field name="name">Contracts ::.. </field>
+            <field name="res_model">hr.contract</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_current':1}</field>
+            <field name="search_view_id" ref="hr_contract_view_search2"/>
+        </record>
+    </data>
+</openerp>

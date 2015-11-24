@@ -1,0 +1,118 @@
+<openerp>
+    <data>
+
+     <record id="category_group_hr_manger_holidays" model="ir.module.category">
+            <field name="name">Cbpo Leaves</field>
+            <field name="sequence" eval="1"/>
+     </record>
+
+        <record id="group_hr_manger_holidays" model="res.groups">
+            <field name="name">Cbpo Mangers HR Privileges</field>
+            <field name="comment">Cbpo Mangers HR Privileges</field>
+            <field name="category_id" ref="category_group_hr_manger_holidays"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+
+        </record>
+
+
+    <record id="holidays_Manger" model="ir.rule">
+        <field name="name">Manger</field>
+        <field ref="hr_holidays.model_hr_holidays" name="model_id"/>
+        <field name="domain_force">['|',('employee_id.user_id.id','=',user.id),('employee_id.parent_id.user_id.id','=',user.id)]</field>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+        <field name="groups" eval="[(4, ref('group_hr_manger_holidays'))]"/>
+        <!--<field name="global" eval="1"/> -->
+    </record>
+
+
+
+
+
+        <record id="group_hr_officer_holidays" model="res.groups">
+            <field name="name">Cbpo HR Officer</field>
+            <field name="comment">Cbpo HR Officer</field>
+            <field name="category_id" ref="category_group_hr_manger_holidays"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+
+        </record>
+
+    <record id="holidays_Officer" model="ir.rule">
+        <field name="name">Hr Officer</field>
+        <field ref="hr_holidays.model_hr_holidays" name="model_id"/>
+        <field name="domain_force">[]</field>
+        <field name="perm_write" eval="1"/>
+        <field name="groups" eval="[(4, ref('group_hr_officer_holidays'))]"/>
+        <!--<field name="global" eval="1"/> -->
+    </record>
+
+
+
+        <record id="hr_holidays_form_inherit" model="ir.ui.view">
+            <field name="name">hr.holidays.form.inherit</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='validate']" position="replace">
+                      <!--<label for="name"/>-->
+                  <button string="Approve OK" name="validate" states="confirm" type="workflow" groups="cbpo_hr_holidays.group_hr_manger_holidays" class="oe_highlight"/>
+                </xpath>
+            </field>
+        </record>
+
+         <!--<record model="ir.actions.act_window" id="request_approve_holidays2">-->
+            <!--<field name="name">Approve For Manger</field>-->
+            <!--<field name="res_model">hr.holidays</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="view_mode"> form,tree</field>-->
+            <!--&lt;!&ndash;<field name="domain">[('type','=','remove')]</field>&ndash;&gt;-->
+            <!--<field name="domain">['|',('employee_id.user_id.id','=',uid),('employee_id.parent_id.user_id.id','=',uid)]</field>-->
+            <!--<field name="view_id" ref="hr_holidays.allocation_company_new"/>-->
+            <!--&lt;!&ndash;<field name="view_id" ref="view_holiday"/>&ndash;&gt;-->
+            <!--<field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>-->
+        <!--</record>-->
+   <!--<menuitem groups="group_hr_manger_holidays" name="Leave ...Manger Requests" parent="hr_holidays.menu_open_ask_holidays" id="menu_request_approve_holidays2" action="request_approve_holidays2" />-->
+
+
+        <!---->
+            <!--<record model="ir.actions.act_window" id="request_approve_holidays">-->
+            <!--<field name="name">Requests to Approve</field>-->
+            <!--<field name="res_model">hr.holidays</field>-->
+            <!--<field name="view_type">form</field>-->
+            <!--<field name="context">{'default_type': 'remove', 'search_default_approve':1}</field>-->
+            <!--<field name="domain">[('type','=','remove')]</field>-->
+            <!--<field name="view_id" ref="hr_holidays.edit_holiday_new"/>-->
+            <!--<field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>-->
+        <!--</record>-->
+
+ <!---->
+
+    </data>
+
+    <data noupdate="1">
+
+        <!--<record id="hr_holidays.property_rule_holidays_manger" model="ir.rule">-->
+        <!--<field name="name">Holidays Manger</field>-->
+        <!--<field name="model_id" ref="model_hr_holidays"/>-->
+        <!--&lt;!&ndash;<field name="domain_force">[]</field>&ndash;&gt;-->
+        <!--<field name="domain_force">['|',('employee_id.user_id','=',user.id),('employee_id.parent_id.user_id','=',user.id)]</field>-->
+        <!--<field name="groups" eval="[(4,ref('group_hr_manger_holidays'))]"/>-->
+    <!--</record>-->
+
+<!--<record id="emp_rule_personal_record" model="ir.rule">-->
+    <!--<field name="name">Personal Leads</field>-->
+    <!--<field name="model_id" ref="model_hr_holidays" />-->
+    <!--<field name="domain_force">[('employee_id.parent_id.user_id','=',uid)]</field>-->
+    <!--<field name="groups" eval="[(4, ref('group_hr_manger_holidays'))]"/>-->
+<!--</record>-->
+
+        <!--<record id="hr_dept_comp_rule_mydepartment" model="ir.rule">-->
+            <!--<field name="name">My Department rule</field>-->
+            <!--<field name="model_id" ref="model_ir_attachment"/>-->
+            <!--<field name="domain_force">[('cbpo_department_id.member_ids.user_id', 'in', [user.id])]</field>-->
+            <!--<field name="groups" eval="[(4, ref('group_hr_manger_holidays'))]"/>-->
+        <!--</record>-->
+    </data>
+</openerp>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report id="sale_custom_report"
+                string="Sale Order Custom Report"
+                model="sale.order"
+                report_type="qweb-pdf"
+                name="cbpo_sales.sale_custom_template"/>
+
+        <record id="paperformat_sale_custom_report" model="report.paperformat">
+            <field name="name">Sale Order Custom Report</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">200</field>
+            <field name="page_width">240</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">15</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">10</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="sale_custom_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="paperformat_sale_custom_report"/>
+        </record>
+
+        <template id="sale_custom_template">
+            <t t-call="cbpo_report_template.td_custom_furniture_offer"></t>
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <style>
+                        .all{border: 1px solid black;}
+                        .under_line{text-decoration: underline;}
+                    </style>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div>
+                        <p>
+                            Client:
+                            <span t-field="o.partner_id"/>
+                        </p>
+                        <p>
+                            Contact Person:
+                            <span style="margin-right:87px;" t-field="o.cbpo_attention_to"/>
+                            Offer ref:
+                            <span t-field="o.cbpo_client_order_ref"/>
+                        </p>
+                        <p>
+                            Contact NO.Mobile:
+                            <span style="margin-right:228px;" t-field="o.partner_id.mobile"/>
+                            Date:
+                            <span t-field="o.date_order" t-field-options='{"format": "d-M-y"}'/>
+                        </p>
+                        <p>
+                            Phone:
+                            <span t-field="o.partner_id.phone"/>
+                        </p>
+                        <p>
+                            E-Mail:
+                            <span t-field="o.partner_id.email"/>
+                        </p>
+                    </div>
+                    <table class="table table-condensed all">
+                        <thead class="all">
+                            <tr class="text-center all">
+                                <td class="all" colspan="13">Bill of Quantity</td>
+                            </tr>
+                            <tr class="all">
+                                <td class="all">Sr.</td>
+                                <td class="all">item Name</td>
+                                <td class="all">item code</td>
+                                <td class="all">Area</td>
+                                <td class="all">Client Code</td>
+                                <td class="all">Description</td>
+                                <td class="all">Finishes</td>
+                                <td class="all">QTY</td>
+                                <td groups="sale.group_discount_per_so_line" class="all">Disc.(%)</td>
+                                <td class="all">Unit Price</td>
+                                <td class="all">Total Price</td>
+                                <td class="all">Comments</td>
+                            </tr>
+                        </thead>
+                        <!-- the start of loop here-->
+                        <tbody class="sale_tbody all">
+                            <tr class="all" t-foreach="o.order_line" t-as="l">
+                                <td class="all">
+                                    <span t-field="l.sequence"/>
+                                </td>
+                                <td class="all">
+                                    <span t-field="l.item_name"/>
+                                </td>
+                                <td class="all">
+                                    <span t-field="l.cbpo_supplier_item_code"/>
+                                </td>
+                                <td class="all">
+                                    <span t-field="l.cbpo_area"/>
+                                </td>
+                                <td class="all">
+                                    <span t-field="l.cbpo_client_code"/>
+                                </td>
+                                <td class="all">
+                                    <span t-field="l.name"/>
+                                </td>
+                                <td class="all">
+                                    <span t-field="l.cbpo_finishes"/>
+                                </td>
+                                <td class="text-right all">
+                                    <span t-field="l.product_uom_qty"/>
+                                    <span groups="product.group_uom" t-field="l.product_uom"/>
+                                </td>
+                                <td class="all" groups="sale.group_discount_per_so_line">
+                                    <span t-field="l.discount"/>
+                                </td>
+                                <td class="text-right all">
+                                    <span t-field="l.price_unit"/>
+                                </td>
+                                <td class="all">
+                                    <span t-field="l.cbpo_total_price"/>
+                                </td>
+                                <td class="all">
+                                    <span t-field="l.cbpo_comments"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <!-- the end of loop here-->
+                        <tr class="all" t-foreach="o.order_line" t-as="l">
+                            <td class="text-left all" colspan="11">Total Amount</td>
+                            <td class="all" colspan="2">
+                                <span t-field="o.amount_untaxed"
+                                      t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
+                            </td>
+                        </tr>
+
+                        <tr class="all" t-foreach="o.order_line" t-as="l">
+                            <td class="text-left all" colspan="11">Discount</td>
+                            <td class="all" colspan="2" groups="sale.group_discount_per_so_line">
+                                <span t-field="l.discount"/>
+                            </td>
+
+
+                        </tr>
+
+                        <tr class="all" t-foreach="o.order_line" t-as="l">
+                            <td class="text-left all" colspan="11">Total Amount After Discount</td>
+                            <td class="all" colspan="2">
+                                <span t-field="l.price_subtotal"
+                                      t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
+                            </td>
+                        </tr>
+
+                        <tr class="all">
+                            <td class="text-left all" colspan="11">Total Amount Including 10% Sales Taxes</td>
+                            <td colspan="2" class="all">
+                                <span t-field="o.amount_total"
+                                      t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
+
+                            </td>
+                        </tr>
+
+                    </table>
+                    <div style="margin-left:30px;">
+                        <div>
+                            <p>
+                                <strong>.Kindly note the following:</strong>
+                            </p>
+
+                            <table>
+                                <tr>
+                                    <td class="text-left" colspan="5">Total Amount:</td>
+                                    <td colspan="2">
+                                        <span t-field="o.amount_untaxed"
+                                              t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-left" colspan="7">Delivery Cost</td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-left" colspan="5">(in Cairo):</td>
+                                    <td colspan="2">
+                                        <span t-field="o.amount_tax"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-left" colspan="5">The Final Total:</td>
+                                    <td colspan="2">
+                                        <span t-field="o.amount_total"
+                                              t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </div>
+                        <br/>
+
+                        <div>
+                            <p>
+                                <strong class="under_line">.Conditions of Available Item in Stock</strong>
+                            </p>
+
+                            <table>
+                                <tr>
+                                    <td class="text-left" colspan="5">Payment Terms:</td>
+                                    <td colspan="5">
+                                        <span t-field="o.payment_term"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-left" colspan="5">Delivery Time:</td>
+                                    <td colspan="5">value
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <br/>
+
+                        <div>
+                            <p>
+                                <strong class="under_line">.Conditions of Items to be ordered</strong>
+                            </p>
+
+                            <table>
+                                <tr>
+                                    <td class="text-left" colspan="8">Payment Terms:</td>
+                                    <td colspan="8">
+                                        <span t-field="o.payment_term"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-left" colspan="8">Delivery Time:</td>
+                                    <td colspan="8">value
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <p>
+                            ------------------------------------------------------------------------------------------------------------------------
+                        </p>
+                        <p>
+                            ------------------------------------------------------------------------------------------------------------------------
+                        </p>
+                        <br/>
+                        <div>
+                            <p>
+                                <strong class="under_line">.Delivery</strong>
+                            </p>
+
+                            <table>
+                                <tr>
+                                    <td class="text-left" colspan="8">Delivery Address:</td>
+                                    <td colspan="8">
+                                        <span t-field="o.partner_id.city"/>
+                                        -
+                                        <span t-field="o.partner_id.street"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="text-left" colspan="8">Delivery Time:</td>
+                                    <td colspan="8">value
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <br/>
+
+                        <div>
+                            <p>
+                                <strong style="margin-right:10px;">.Sales Representative:</strong>
+                                <span style="margin-right:100px;" t-field="o.user_id.name">Client Signature :
+                                </span>
+                                <span style="margin-right:100px;">Client Signature :</span>
+                                <span>------------------</span>
+                            </p>
+                        </div>
+
+                        <div>
+                            <p>
+                                <strong style="margin-right:100px;">Showrooms Manger</strong>
+                                <span>NERMIN SAMY</span>
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+
+        </template>
+    </data>
+</openerp>

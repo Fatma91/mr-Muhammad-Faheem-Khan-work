@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="view_attendance2_form" model="ir.ui.view">
+			<field name="name">hr.attendance2.form</field>
+			<field name="model">hr.attendance2</field>
+			<field name="arch" type="xml">
+				<form string="Employee attendance2s" version="7.0">
+
+					<sheet>
+
+						<header>
+							<h1>Cbpo Attendance</h1>
+						</header>
+						<group>
+                            <field name="employee_id" />
+                            <field name="day" />
+                            <field name="time_in" />
+                            <field name="compute" />
+                            <field name="discip_in" />
+                            <field name="discip_in_id" />
+                            <field name="discip_in_id_count" />
+                            <field name="overtime_in" />
+                            <field name="overtime_in_id" />
+                            <field name="overtime_in_id_count" />
+                            <field name="diff_time_in" />
+                            <field name="schedule_time_in" />
+                            <field name="state" />
+                            <field name="time_out" />
+                            <field name="discip_out" />
+                            <field name="discip_out_id" />
+                            <field name="discip_out_id_count" />
+                            <field name="overtime_out" />
+                            <field name="overtime_out_id" />
+                            <field name="overtime_out_id_count" />
+                            <field name="diff_time_out" />
+                            <field name="schedule_time_out" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="view_attendance2_tree" model="ir.ui.view">
+			<field name="name">hr.attendance2.tree</field>
+			<field name="model">hr.attendance2</field>
+			<field name="arch" type="xml">
+				<tree string="Employee attendances"
+					colors="blue:state == 'in'; red:state == 'out'; green:state == 'in_out'">
+					<field name="employee_id" />
+					<field name="day" />
+					<field name="time_in" />
+                    <field name="compute" />
+					<field name="discip_in" />
+
+					<field name="discip_in_id_count" />
+                    <field name="overtime_in" />
+
+					<field name="overtime_in_id_count" />
+					<field name="diff_time_in" />
+					<field name="schedule_time_in" />
+					<field name="state" />
+					<field name="time_out" />
+                    <field name="discip_out" />
+
+					<field name="discip_out_id_count" />
+                    <field name="overtime_out" />
+
+					<field name="overtime_out_id_count" />
+					<field name="diff_time_out" />
+					<field name="schedule_time_out" />
+				</tree>
+			</field>
+		</record>
+
+
+		<record id="open_view_attendance2" model="ir.actions.act_window">
+			<field name="name">Attendances 2</field>
+			<field name="res_model">hr.attendance2</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help">The Time Tracking functionality aims to manage
+				employee attendances from Sign in/Sign out actions. You can also
+				link this feature to an attendance device using OpenERP's web
+				service features.
+			</field>
+		</record>
+
+<!-- editable="bottom" -->
+        <record id="view_attendance3_tree" model="ir.ui.view">
+			<field name="name">hr.attendance3.tree</field>
+			<field name="model">hr.attendance3</field>
+			<field name="arch" type="xml">
+				<tree string="Employee  Month attendances" >
+                    <field name="month" />
+					<field name="employee_id" />
+                    <field name="days_discip_in" />
+					<field name="total_discip_in" />
+                    <field name="total_overtime" />
+				</tree>
+			</field>
+		</record>
+
+
+
+
+        <record id="open_view_attendance3" model="ir.actions.act_window">
+			<field name="name">Attendances 3</field>
+			<field name="res_model">hr.attendance3</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="help">The Time Tracking functionality aims to manage
+				employee attendances from Sign in/Sign out actions. You can also
+				link this feature to an attendance device using OpenERP's web
+				service features.
+			</field>
+		</record>
+
+
+
+		<record id="view_hr_fingerprint_data_form" model="ir.ui.view">
+			<field name="name">hr.fingerprint_data.form</field>
+			<field name="model">hr.fingerprint_data</field>
+			<field name="arch" type="xml">
+				<form string="fingerprint data" version="7.0">
+
+					<sheet>
+						<header>
+							<h1>Fingerprint Data</h1>
+
+						</header>
+						<group>
+							<field name="name" />
+
+							<field name="fid" />
+							<field name="action" />
+						</group>
+
+						<templates>
+
+							<t t-name="kanban-box">
+								<div class="oe_kanban_vignette oe_semantic_html_override">
+
+
+								</div>
+							</t>
+						</templates>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="view_hr_fingerprint_data_tree" model="ir.ui.view">
+			<field name="name">hr.fingerprint_data.tree</field>
+			<field name="model">hr.fingerprint_data</field>
+			<field name="arch" type="xml">
+				<tree string="fingerprint data" editable="bottom"
+					colors="blue:compute == '0';  green:compute == '1'">
+					<field name="name" />
+
+					<field name="fid" />
+					<field name="action" />
+					<field name="compute" />
+
+				</tree>
+			</field>
+		</record>
+		<record id="action_fingerprint_data" model="ir.actions.act_window">
+			<field name="name">Fingerprint Data</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.fingerprint_data</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					<!-- Add Text Here -->
+				</p>
+				<p>
+					<!-- More details about what a user can do with this object will be 
+						OK -->
+				</p>
+			</field>
+		</record>
+
+		<menuitem action="action_fingerprint_data" id="menu_action_fingerprint_data"
+			parent="hr_attendance.menu_hr_attendance" sequence="101" />
+
+		<menuitem action="open_view_attendance2" id="menu_open_view_attendance2"
+			parent="hr_attendance.menu_hr_attendance" sequence="99" />
+        <menuitem action="open_view_attendance3" id="menu_open_view_attendance3"
+			parent="hr_attendance.menu_hr_attendance" sequence="100" />
+
+
+	</data>
+</openerp>
+
+
